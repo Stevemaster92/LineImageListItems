@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">LineImageListItems</string>
+    <string name="one_item_fragment">1-Line</string>
+    <string name="two_item_fragment">2-Line</string>
+    <string name="three_item_fragment">3-Line</string>
+    <string name="one_one_item_fragment">1-Line 1-Line</string>
+    <string name="one_two_item_fragment">1-Line 2-Line</string>
+    <string name="one_three_item_fragment">1-Line 3-Line</string>
+    <string name="two_one_item_fragment">2-Line 1-Line</string>
+    <string name="two_two_item_fragment">2-Line 2-Line</string>
+    <string name="two_three_item_fragment">2-Line 3-Line</string>
+    <string name="three_one_item_fragment">3-Line 1-Line</string>
+    <string name="three_two_item_fragment">3-Line 2-Line</string>
+    <string name="three_three_item_child_fragment">3-Line 3-Line</string>
+</resources>

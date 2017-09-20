@@ -1,0 +1,14 @@
+<resources>
+
+    <style name="TextAppearance.ListItemFirstLine" parent="android:TextAppearance">
+        <item name="android:textSize">@dimen/list_item_first_line_text_size</item>
+    </style>
+
+    <style name="TextAppearance.ListItemSecondLine" parent="android:TextAppearance">
+        <item name="android:textSize">@dimen/list_item_second_line_text_size</item>
+    </style>
+
+    <style name="TextAppearance.ListItemThirdLine" parent="android:TextAppearance">
+        <item name="android:textSize">@dimen/list_item_third_line_text_size</item>
+    </style>
+</resources>
