@@ -30,7 +30,7 @@ public class ThreeOneItemFragment extends ExpandableListFragment<ThreeGroupOneCh
         List<ThreeGroupOneChildItem> groups = new ArrayList<>();
         List<OneLineDummy> children = new ArrayList<>();
 
-        for (int i = 0; i < MainActivity.NUMBER_OF_ITEMS; i++)
+        for (int i = 0; i < MainActivity.NUMBER_OF_ITEMS / 2; i++)
             children.add(new OneLineDummy());
         for (int i = 0; i < MainActivity.NUMBER_OF_ITEMS; i++)
             groups.add(new ThreeGroupOneChildItem(children));
