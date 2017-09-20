@@ -1,6 +1,5 @@
 [![release](https://img.shields.io/badge/release-v1.0-blue.svg)](https://gitlab.com/stevemaster92/LineImageListItems)
 [![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16)
-[![pipeline status](https://github.com/Stevemaster92/LineImageListItems/badges/master/pipeline.svg)](https://github.com/Stevemaster92/LineImageListItems/commits/master)
 
 # LineImageListItems (LILI)
 [LineImageListItems](https://github.com/Stevemaster92/LineImageListItems) is an easy-to-use library which provides default list items, adapters, and list fragments fitting daily Android development with [ListView](https://developer.android.com/reference/android/widget/ListView.html)s.
