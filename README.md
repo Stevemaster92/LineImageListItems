@@ -11,7 +11,7 @@ Furthermore, one can extend the functionalities of the provided models, adapters
 Refer to the [Wiki](https://github.com/Stevemaster92/LineImageListItems/wikis) for more information about the library's components and how to integrate it in your Android app for your personal usage.
 
 ## Example App
-You can download an example Android application from [here](https://play.google.com/store) or take a look at the [example code](https://github.com/Stevemaster92/LineImageListItems/tree/master/app) for better understanding.
+You can download an example Android application from [here](https://play.google.com/store) or take a look at the [example code](https://github.com/Stevemaster92/LineImageListItems/tree/master/app).
 
 ## License
 LineImageListItems library for Android
