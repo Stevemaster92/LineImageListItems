@@ -7,14 +7,38 @@
 # LineImageListItems (LILI)
 [LineImageListItems](https://github.com/Stevemaster92/LineImageListItems) is an easy-to-use library which provides default list items, adapters, and list fragments fitting daily Android development with [ListView](https://developer.android.com/reference/android/widget/ListView.html)s.
 The library is implemented in a way such that custom changes to the layout of the different list items can be made easily.
-Furthermore, one can extend the functionalities of the provided models, adapters, and fragments to their personal usage and create own classes for each component.
+Furthermore, one can extend the functionalities of the provided models, adapters, and fragments to their personal usage and create own classes of each component.
 
+## Getting started
+At the moment, only an Android Archive (AAR) file of the library exists.
+Work on a more convenient, Maven-/Gradle-based solution is still going on.
+In order to use the library:
+
+ 1. Download the library from [here](https://github.com/Stevemaster92/LineImageListItems/raw/master/lili/lili-release.aar).
+ 2. Copy the downloaded AAR file to `app/libs/` of your Android project.
+ 3. Add the following to your project level `build.gradle`
+  ```gradle
+  repositories {
+      flatDir {
+          dirs 'libs'
+      }
+  }
+  ```
+
+ 4. Add the following to your app `build.gradle`
+ ```gradle
+ dependencies {
+   compile(name: 'lili-release', ext: 'aar')
+ }
+ ```
+ 
+ 5. In Android Studio, select **Tools > Android > Sync Project with Gradle Files** or click **Sync Now**.
 
 ## Documentation
-Refer to the [Wiki](https://github.com/Stevemaster92/LineImageListItems/wiki) for more information about the library's components and how to integrate it in your Android app.
+Refer to the [Wiki](https://github.com/Stevemaster92/LineImageListItems/wiki) for more information about the library's components and how to integrate them in your Android app.
 
 ## Example App
-You can download an example Android application from [here](https://play.google.com/store) or take a look at the [example code](https://github.com/Stevemaster92/LineImageListItems/tree/master/app).
+You can download an example Android application from [here](https://play.google.com/store) or take a look at the example [code](https://github.com/Stevemaster92/LineImageListItems/tree/master/app).
 
 ## License
 LineImageListItems library for Android
