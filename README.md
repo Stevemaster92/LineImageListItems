@@ -3,12 +3,12 @@
 
 # LineImageListItems (LILI)
 [LineImageListItems](https://github.com/Stevemaster92/LineImageListItems) is an easy-to-use library which provides default list items, adapters, and list fragments fitting daily Android development with [ListView](https://developer.android.com/reference/android/widget/ListView.html)s.
-The library is implemented generically such that custom changes to the layout of the different list items can be easily made.
+The library is implemented in a way such that custom changes to the layout of the different list items can be made easily.
 Furthermore, one can extend the functionalities of the provided models, adapters, and fragments to their personal usage and create own classes for each component.
 
 
 ## Documentation
-Refer to the [Wiki](https://github.com/Stevemaster92/LineImageListItems/wiki) for more information about the library's components and how to integrate it in your Android app for your personal usage.
+Refer to the [Wiki](https://github.com/Stevemaster92/LineImageListItems/wiki) for more information about the library's components and how to integrate it in your Android app.
 
 ## Example App
 You can download an example Android application from [here](https://play.google.com/store) or take a look at the [example code](https://github.com/Stevemaster92/LineImageListItems/tree/master/app).
