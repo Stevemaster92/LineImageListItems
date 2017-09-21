@@ -31,7 +31,8 @@ public abstract class ExpandableListFragment<G extends OneLineImageGroupItem<C>,
 
     @Override
     protected void notifyAdapter() {
-        adapter.notifyDataSetChanged();
+        if (adapter != null)
+            adapter.notifyDataSetChanged();
     }
 
     @Override

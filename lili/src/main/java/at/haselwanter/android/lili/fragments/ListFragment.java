@@ -100,7 +100,8 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
      * Notifies the list adapter that the data set has changed.
      */
     protected void notifyAdapter() {
-        adapter.notifyDataSetChanged();
+        if (adapter != null)
+            adapter.notifyDataSetChanged();
     }
 
     /**
