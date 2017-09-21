@@ -9,6 +9,30 @@
 The library is implemented in a way such that custom changes to the layout of the different list items can be made easily.
 Furthermore, one can extend the functionalities of the provided models, adapters, and fragments to their personal usage and create own classes for each component.
 
+## Getting started
+At the moment, only an Android Archive (AAR) file of the library exists.
+Work on a more convenient, Maven-/Gradle-based solution is still going on.
+In order to use the library:
+
+ 1. Download the library from [here](https://github.com/Stevemaster92/LineImageListItems/raw/master/lili/lili-release.aar).
+ 2. Copy the downloaded AAR file to `app/libs/` of your Android project.
+ 3. Add the following to your project level `build.gradle`
+  ```gradle
+  repositories {
+      flatDir {
+          dirs 'libs'
+      }
+  }
+  ```
+
+ 4. Add the following to your app `build.gradle`
+ ```gradle
+ dependencies {
+   compile(name: 'lili-release', ext: 'aar')
+ }
+ ```
+ 
+ 5. In Android Studio, select **Tools > Android > Sync Project with Gradle Files** or click **Sync Now**.
 
 ## Documentation
 Refer to the [Wiki](https://github.com/Stevemaster92/LineImageListItems/wiki) for more information about the library's components and how to integrate it in your Android app.
