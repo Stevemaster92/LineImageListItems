@@ -111,7 +111,7 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
     protected abstract ListAdapter<T> getAdapter();
 
     protected String getLoadingText() {
-        return getString(R.string.loading);
+        return "Loading...";
     }
 
     /**

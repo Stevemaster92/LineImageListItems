@@ -22,7 +22,7 @@
         android:layout_gravity="center_horizontal"
         android:paddingBottom="@dimen/horizontal_margin_small"
         android:paddingTop="@dimen/horizontal_margin_small"
-        android:text="@string/loading"
+        android:text="Loading..."
         android:textColor="@color/loadingItemText"
         android:textSize="14sp"/>
 </LinearLayout>
