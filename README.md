@@ -38,7 +38,7 @@ In order to use the library:
 Refer to the [Wiki](https://github.com/Stevemaster92/LineImageListItems/wiki) for more information about the library's components and how to integrate them in your Android app.
 
 ## Example App
-You can download an example Android application from [here](https://play.google.com/store) or take a look at the [example code](https://github.com/Stevemaster92/LineImageListItems/tree/master/app).
+You can download an example Android application from [here](https://play.google.com/store) or take a look at the example [code](https://github.com/Stevemaster92/LineImageListItems/tree/master/app).
 
 ## License
 LineImageListItems library for Android
