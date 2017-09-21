@@ -55,16 +55,28 @@ public class OneLineImageGroupItemAdapter<T extends OneLineImageGroupItem> exten
             holder.firstLine.setVisibility(View.GONE);
 
         int imageDrawableRes = item.getImageDrawableRes();
-        if (imageDrawableRes != 0)
+        if (imageDrawableRes != 0) {
+            holder.image.setVisibility(View.VISIBLE);
             holder.image.setImageResource(imageDrawableRes);
+        } else {
+            holder.image.setVisibility(View.GONE);
+        }
 
         Drawable imageDrawable = item.getImageDrawable();
-        if (imageDrawable != null)
+        if (imageDrawable != null) {
+            holder.image.setVisibility(View.VISIBLE);
             holder.image.setImageDrawable(imageDrawable);
+        } else {
+            holder.image.setVisibility(View.GONE);
+        }
 
         Bitmap imageBitmap = item.getImageBitmap();
-        if (imageBitmap != null)
+        if (imageBitmap != null) {
+            holder.image.setVisibility(View.VISIBLE);
             holder.image.setImageBitmap(imageBitmap);
+        } else {
+            holder.image.setVisibility(View.GONE);
+        }
     }
 
     /**
