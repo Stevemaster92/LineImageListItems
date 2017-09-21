@@ -1,5 +1,5 @@
 [![release](https://img.shields.io/badge/release-v1.0-blue.svg)](https://github.com/Stevemaster92/LineImageListItems)
-[![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16)
+[![API](https://img.shields.io/badge/API-9%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=9)
 
 ![alt text](https://github.com/Stevemaster92/LineImageListItems/blob/master/screenshots/one_line_items.png "OneLineImageItems")
 ![alt text](https://github.com/Stevemaster92/LineImageListItems/blob/master/screenshots/three_group_one_child_items.png "ThreeGroupOneChildItems")
