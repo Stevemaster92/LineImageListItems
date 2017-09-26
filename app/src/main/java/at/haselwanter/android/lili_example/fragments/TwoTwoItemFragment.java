@@ -26,7 +26,7 @@ public class TwoTwoItemFragment extends ExpandableListFragment<TwoGroupTwoChildI
     }
 
     @Override
-    protected List<TwoGroupTwoChildItem> loadData() {
+    public List<TwoGroupTwoChildItem> onDataLoading() {
         List<TwoGroupTwoChildItem> groups = new ArrayList<>();
         List<TwoLineDummy> children = new ArrayList<>();
 
@@ -39,7 +39,7 @@ public class TwoTwoItemFragment extends ExpandableListFragment<TwoGroupTwoChildI
     }
 
     @Override
-    protected void onNoDataLoaded() {
+    public void onNoDataLoaded() {
 
     }
 }

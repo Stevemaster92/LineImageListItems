@@ -26,7 +26,7 @@ public class ThreeThreeItemFragment extends ExpandableListFragment<ThreeGroupThr
     }
 
     @Override
-    protected List<ThreeGroupThreeChildItem> loadData() {
+    public List<ThreeGroupThreeChildItem> onDataLoading() {
         List<ThreeGroupThreeChildItem> groups = new ArrayList<>();
         List<ThreeLineDummy> children = new ArrayList<>();
 
@@ -39,7 +39,7 @@ public class ThreeThreeItemFragment extends ExpandableListFragment<ThreeGroupThr
     }
 
     @Override
-    protected void onNoDataLoaded() {
+    public void onNoDataLoaded() {
 
     }
 }

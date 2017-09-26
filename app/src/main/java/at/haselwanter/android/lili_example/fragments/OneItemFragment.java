@@ -25,7 +25,7 @@ public class OneItemFragment extends ListFragment<OneLineDummy> {
     }
 
     @Override
-    protected List<OneLineDummy> loadData() {
+    public List<OneLineDummy> onDataLoading() {
         List<OneLineDummy> list = new ArrayList<>();
 
         for (int i = 0; i < MainActivity.NUMBER_OF_ITEMS; i++)
@@ -35,7 +35,7 @@ public class OneItemFragment extends ListFragment<OneLineDummy> {
     }
 
     @Override
-    protected void onNoDataLoaded() {
+    public void onNoDataLoaded() {
 
     }
 }

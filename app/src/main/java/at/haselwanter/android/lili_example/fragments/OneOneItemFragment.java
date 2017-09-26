@@ -7,8 +7,8 @@ import at.haselwanter.android.lili.adapters.ExpandableListAdapter;
 import at.haselwanter.android.lili.fragments.ExpandableListFragment;
 import at.haselwanter.android.lili_example.MainActivity;
 import at.haselwanter.android.lili_example.adapters.OneGroupOneChildItemAdapter;
-import at.haselwanter.android.lili_example.models.OneLineDummy;
 import at.haselwanter.android.lili_example.models.OneGroupOneChildItem;
+import at.haselwanter.android.lili_example.models.OneLineDummy;
 
 
 /**
@@ -26,7 +26,7 @@ public class OneOneItemFragment extends ExpandableListFragment<OneGroupOneChildI
     }
 
     @Override
-    protected List<OneGroupOneChildItem> loadData() {
+    public List<OneGroupOneChildItem> onDataLoading() {
         List<OneGroupOneChildItem> groups = new ArrayList<>();
         List<OneLineDummy> children = new ArrayList<>();
 
@@ -39,7 +39,7 @@ public class OneOneItemFragment extends ExpandableListFragment<OneGroupOneChildI
     }
 
     @Override
-    protected void onNoDataLoaded() {
+    public void onNoDataLoaded() {
 
     }
 }

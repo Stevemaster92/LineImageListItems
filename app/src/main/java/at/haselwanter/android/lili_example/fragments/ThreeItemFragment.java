@@ -24,7 +24,7 @@ public class ThreeItemFragment extends ListFragment<ThreeLineDummy> {
     }
 
     @Override
-    protected List<ThreeLineDummy> loadData() {
+    public List<ThreeLineDummy> onDataLoading() {
         List<ThreeLineDummy> list = new ArrayList<>();
 
         for (int i = 0; i < MainActivity.NUMBER_OF_ITEMS; i++)
@@ -34,7 +34,7 @@ public class ThreeItemFragment extends ListFragment<ThreeLineDummy> {
     }
 
     @Override
-    protected void onNoDataLoaded() {
+    public void onNoDataLoaded() {
 
     }
 }
