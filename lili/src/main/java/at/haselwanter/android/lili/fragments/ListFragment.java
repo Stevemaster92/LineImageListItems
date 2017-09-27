@@ -30,7 +30,7 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
     protected ListAdapter<T> adapter;
     protected ListView listView;
     protected OnListItemActionListener listener;
-    protected boolean isInitialized;
+    protected boolean isInitialized, loadingEnabled = true;
     private LoadDataTask task;
 
     protected ListFragment() {
@@ -41,7 +41,7 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (!isInitialized)
+        if (loadingEnabled && !isInitialized)
             loadDataWithProgressBar();
     }
 
