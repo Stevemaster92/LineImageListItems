@@ -38,8 +38,8 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         if (!isInitialized)
             loadDataWithProgressBar();
