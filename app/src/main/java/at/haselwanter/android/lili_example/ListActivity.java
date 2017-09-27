@@ -22,6 +22,8 @@ import at.haselwanter.android.lili_example.fragments.TwoThreeItemFragment;
 import at.haselwanter.android.lili_example.fragments.TwoTwoItemFragment;
 
 public class ListActivity extends AppCompatActivity implements ListFragment.OnListItemActionListener {
+    public static final int NUMBER_OF_ITEMS = 10;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

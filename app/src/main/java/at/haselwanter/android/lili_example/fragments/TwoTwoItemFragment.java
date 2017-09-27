@@ -5,10 +5,10 @@ import java.util.List;
 
 import at.haselwanter.android.lili.adapters.ExpandableListAdapter;
 import at.haselwanter.android.lili.fragments.ExpandableListFragment;
-import at.haselwanter.android.lili_example.MainActivity;
+import at.haselwanter.android.lili_example.ListActivity;
 import at.haselwanter.android.lili_example.adapters.TwoGroupTwoChildItemAdapter;
-import at.haselwanter.android.lili_example.models.TwoLineDummy;
 import at.haselwanter.android.lili_example.models.TwoGroupTwoChildItem;
+import at.haselwanter.android.lili_example.models.TwoLineDummy;
 
 
 /**
@@ -26,13 +26,13 @@ public class TwoTwoItemFragment extends ExpandableListFragment<TwoGroupTwoChildI
     }
 
     @Override
-    public List<TwoGroupTwoChildItem> onDataLoading() {
+    public List<TwoGroupTwoChildItem> loadData() {
         List<TwoGroupTwoChildItem> groups = new ArrayList<>();
         List<TwoLineDummy> children = new ArrayList<>();
 
-        for (int i = 0; i < MainActivity.NUMBER_OF_ITEMS; i++)
+        for (int i = 0; i < ListActivity.NUMBER_OF_ITEMS / 2; i++)
             children.add(new TwoLineDummy());
-        for (int i = 0; i < MainActivity.NUMBER_OF_ITEMS; i++)
+        for (int i = 0; i < ListActivity.NUMBER_OF_ITEMS; i++)
             groups.add(new TwoGroupTwoChildItem(children));
 
         return groups;

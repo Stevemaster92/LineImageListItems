@@ -10,6 +10,6 @@ import at.haselwanter.android.lili_example.R;
  */
 public class OneGroupTwoChildItem extends OneLineImageGroupItem<TwoLineDummy> {
     public OneGroupTwoChildItem(List<TwoLineDummy> children) {
-        super(0, "First line", R.drawable.ic_android, children);
+        super(0, "First line", R.drawable.ic_android_blue, children);
     }
 }

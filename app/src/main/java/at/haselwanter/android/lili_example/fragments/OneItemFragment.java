@@ -6,7 +6,7 @@ import java.util.List;
 import at.haselwanter.android.lili.adapters.ListAdapter;
 import at.haselwanter.android.lili.adapters.OneLineImageItemAdapter;
 import at.haselwanter.android.lili.fragments.ListFragment;
-import at.haselwanter.android.lili_example.MainActivity;
+import at.haselwanter.android.lili_example.ListActivity;
 import at.haselwanter.android.lili_example.models.OneLineDummy;
 
 
@@ -25,10 +25,10 @@ public class OneItemFragment extends ListFragment<OneLineDummy> {
     }
 
     @Override
-    public List<OneLineDummy> onDataLoading() {
+    public List<OneLineDummy> loadData() {
         List<OneLineDummy> list = new ArrayList<>();
 
-        for (int i = 0; i < MainActivity.NUMBER_OF_ITEMS; i++)
+        for (int i = 0; i < ListActivity.NUMBER_OF_ITEMS; i++)
             list.add(new OneLineDummy());
 
         return list;

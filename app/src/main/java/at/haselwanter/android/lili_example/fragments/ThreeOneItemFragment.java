@@ -5,7 +5,7 @@ import java.util.List;
 
 import at.haselwanter.android.lili.adapters.ExpandableListAdapter;
 import at.haselwanter.android.lili.fragments.ExpandableListFragment;
-import at.haselwanter.android.lili_example.MainActivity;
+import at.haselwanter.android.lili_example.ListActivity;
 import at.haselwanter.android.lili_example.adapters.ThreeGroupOneChildItemAdapter;
 import at.haselwanter.android.lili_example.models.OneLineDummy;
 import at.haselwanter.android.lili_example.models.ThreeGroupOneChildItem;
@@ -26,13 +26,13 @@ public class ThreeOneItemFragment extends ExpandableListFragment<ThreeGroupOneCh
     }
 
     @Override
-    public List<ThreeGroupOneChildItem> onDataLoading() {
+    public List<ThreeGroupOneChildItem> loadData() {
         List<ThreeGroupOneChildItem> groups = new ArrayList<>();
         List<OneLineDummy> children = new ArrayList<>();
 
-        for (int i = 0; i < MainActivity.NUMBER_OF_ITEMS / 2; i++)
+        for (int i = 0; i < ListActivity.NUMBER_OF_ITEMS / 2; i++)
             children.add(new OneLineDummy());
-        for (int i = 0; i < MainActivity.NUMBER_OF_ITEMS; i++)
+        for (int i = 0; i < ListActivity.NUMBER_OF_ITEMS; i++)
             groups.add(new ThreeGroupOneChildItem(children));
 
         return groups;

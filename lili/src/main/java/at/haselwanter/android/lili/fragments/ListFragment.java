@@ -172,17 +172,11 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
 
         @Override
         protected void onPostExecute(final List<T> result) {
-            if (getActivity() != null && result != null && result.size() > 0) {
+            if (result != null && result.size() > 0) {
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                updateList(result);
-                            }
-                        });
-
+                        updateList(result);
                         isInitialized = true;
                     }
                 });

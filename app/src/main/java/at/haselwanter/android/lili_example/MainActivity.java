@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
-    public static final int NUMBER_OF_ITEMS = 10;
     public static final String TAG_LIST_INDEX = "list_index";
 
     @Override
