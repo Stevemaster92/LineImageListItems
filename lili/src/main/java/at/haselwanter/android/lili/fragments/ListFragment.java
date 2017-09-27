@@ -97,6 +97,27 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
     }
 
     /**
+     * Updates the current list by adding the next item.
+     *
+     * @param nextItem The item to add next.
+     */
+    protected void add(T nextItem) {
+        list.add(nextItem);
+        notifyAdapter();
+    }
+
+    /**
+     * Updates the current list by adding the next item at the specific index.
+     *
+     * @param index    The list index to start adding next item.
+     * @param nextItem The items to add next.
+     */
+    protected void add(int index, T nextItem) {
+        list.add(index, nextItem);
+        notifyAdapter();
+    }
+
+    /**
      * Notifies the list adapter that the data set has changed.
      */
     protected void notifyAdapter() {
