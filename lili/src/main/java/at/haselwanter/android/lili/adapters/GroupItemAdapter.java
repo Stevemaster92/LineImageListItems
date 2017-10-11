@@ -21,10 +21,7 @@ public abstract class GroupItemAdapter<T extends Expandable> extends ListAdapter
 
     @Override
     protected void prepareViewHolder(View v) {
-        ViewHolder holder = new ViewHolder();
-        holder.groupIndicator = (ImageView) v.findViewById(R.id.group_indicator);
-
-        v.setTag(holder);
+        v.setTag(new ViewHolder(v));
     }
 
     @Override
@@ -48,5 +45,9 @@ public abstract class GroupItemAdapter<T extends Expandable> extends ListAdapter
 
     protected static class ViewHolder {
         public ImageView groupIndicator;
+
+        public ViewHolder(View itemView) {
+            groupIndicator = (ImageView) itemView.findViewById(R.id.group_indicator);
+        }
     }
 }

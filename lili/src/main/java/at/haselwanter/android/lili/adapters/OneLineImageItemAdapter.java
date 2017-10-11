@@ -29,11 +29,7 @@ public class OneLineImageItemAdapter<T extends OneLineImageItem> extends ListAda
 
     @Override
     protected void prepareViewHolder(View v) {
-        ViewHolder holder = new ViewHolder();
-        holder.firstLine = (TextView) v.findViewById(R.id.first_line);
-        holder.image = (ImageView) v.findViewById(R.id.image);
-
-        v.setTag(holder);
+        v.setTag(new ViewHolder(v));
     }
 
     @Override
@@ -75,5 +71,10 @@ public class OneLineImageItemAdapter<T extends OneLineImageItem> extends ListAda
     protected static class ViewHolder {
         public TextView firstLine;
         public ImageView image;
+
+        public ViewHolder(View itemView) {
+            firstLine = (TextView) itemView.findViewById(R.id.first_line);
+            image = (ImageView) itemView.findViewById(R.id.image);
+        }
     }
 }

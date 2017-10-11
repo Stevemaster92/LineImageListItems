@@ -26,16 +26,7 @@ public class TwoLineImageGroupItemAdapter<T extends TwoLineImageGroupItem> exten
 
     @Override
     protected void prepareViewHolder(View v) {
-        super.prepareViewHolder(v);
-
-        OneLineImageGroupItemAdapter.ViewHolder parentHolder = (OneLineImageGroupItemAdapter.ViewHolder) v.getTag();
-        ViewHolder holder = new ViewHolder();
-        holder.groupIndicator = parentHolder.groupIndicator;
-        holder.firstLine = parentHolder.firstLine;
-        holder.image = parentHolder.image;
-        holder.secondLine = (TextView) v.findViewById(R.id.second_line);
-
-        v.setTag(holder);
+        v.setTag(new ViewHolder(v));
     }
 
     @Override
@@ -58,5 +49,10 @@ public class TwoLineImageGroupItemAdapter<T extends TwoLineImageGroupItem> exten
      */
     protected static class ViewHolder extends OneLineImageGroupItemAdapter.ViewHolder {
         public TextView secondLine;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            secondLine = (TextView) itemView.findViewById(R.id.second_line);
+        }
     }
 }

@@ -26,17 +26,7 @@ public class ThreeLineImageGroupItemAdapter<T extends ThreeLineImageGroupItem> e
 
     @Override
     protected void prepareViewHolder(View v) {
-        super.prepareViewHolder(v);
-
-        TwoLineImageGroupItemAdapter.ViewHolder parentHolder = (TwoLineImageGroupItemAdapter.ViewHolder) v.getTag();
-        ViewHolder holder = new ViewHolder();
-        holder.groupIndicator = parentHolder.groupIndicator;
-        holder.firstLine = parentHolder.firstLine;
-        holder.image = parentHolder.image;
-        holder.secondLine = parentHolder.secondLine;
-        holder.thirdLine = (TextView) v.findViewById(R.id.third_line);
-
-        v.setTag(holder);
+        v.setTag(new ViewHolder(v));
     }
 
     @Override
@@ -59,5 +49,10 @@ public class ThreeLineImageGroupItemAdapter<T extends ThreeLineImageGroupItem> e
      */
     protected static class ViewHolder extends TwoLineImageGroupItemAdapter.ViewHolder {
         public TextView thirdLine;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            thirdLine = (TextView) itemView.findViewById(R.id.third_line);
+        }
     }
 }

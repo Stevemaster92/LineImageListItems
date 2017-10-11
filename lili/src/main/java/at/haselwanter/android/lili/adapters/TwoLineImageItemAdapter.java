@@ -26,15 +26,7 @@ public class TwoLineImageItemAdapter<T extends TwoLineImageItem> extends OneLine
 
     @Override
     protected void prepareViewHolder(View v) {
-        super.prepareViewHolder(v);
-
-        OneLineImageItemAdapter.ViewHolder parentHolder = (OneLineImageItemAdapter.ViewHolder) v.getTag();
-        ViewHolder holder = new ViewHolder();
-        holder.firstLine = parentHolder.firstLine;
-        holder.image = parentHolder.image;
-        holder.secondLine = (TextView) v.findViewById(R.id.second_line);
-
-        v.setTag(holder);
+        v.setTag(new ViewHolder(v));
     }
 
     @Override
@@ -57,5 +49,10 @@ public class TwoLineImageItemAdapter<T extends TwoLineImageItem> extends OneLine
      */
     protected static class ViewHolder extends OneLineImageItemAdapter.ViewHolder {
         public TextView secondLine;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            secondLine = (TextView) itemView.findViewById(R.id.second_line);
+        }
     }
 }

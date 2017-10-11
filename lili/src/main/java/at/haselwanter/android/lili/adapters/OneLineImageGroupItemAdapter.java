@@ -29,15 +29,7 @@ public class OneLineImageGroupItemAdapter<T extends OneLineImageGroupItem> exten
 
     @Override
     protected void prepareViewHolder(View v) {
-        super.prepareViewHolder(v);
-
-        GroupItemAdapter.ViewHolder parentHolder = (GroupItemAdapter.ViewHolder) v.getTag();
-        ViewHolder holder = new ViewHolder();
-        holder.groupIndicator = parentHolder.groupIndicator;
-        holder.firstLine = (TextView) v.findViewById(R.id.first_line);
-        holder.image = (ImageView) v.findViewById(R.id.image);
-
-        v.setTag(holder);
+        v.setTag(new ViewHolder(v));
     }
 
     @Override
@@ -81,5 +73,11 @@ public class OneLineImageGroupItemAdapter<T extends OneLineImageGroupItem> exten
     protected static class ViewHolder extends GroupItemAdapter.ViewHolder {
         public TextView firstLine;
         public ImageView image;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            firstLine = (TextView) itemView.findViewById(R.id.first_line);
+            image = (ImageView) itemView.findViewById(R.id.image);
+        }
     }
 }
