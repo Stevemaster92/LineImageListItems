@@ -37,6 +37,7 @@ public abstract class GroupItemAdapter<T extends Expandable> extends ListAdapter
 
     public void toggleChildren(View v, boolean isExpanded) {
         ViewHolder holder = (ViewHolder) v.getTag();
+
         if (isExpanded)
             holder.groupIndicator.setImageResource(R.drawable.ic_expand_less);
         else

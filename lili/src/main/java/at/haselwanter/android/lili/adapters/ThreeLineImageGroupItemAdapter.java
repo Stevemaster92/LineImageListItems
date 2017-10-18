@@ -1,6 +1,7 @@
 package at.haselwanter.android.lili.adapters;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -37,7 +38,7 @@ public class ThreeLineImageGroupItemAdapter<T extends ThreeLineImageGroupItem> e
         T item = getItem(position);
 
         String thirdLineText = item.getThirdLine();
-        if (thirdLineText != null && !thirdLineText.equals("")) {
+        if (!TextUtils.isEmpty(thirdLineText)) {
             holder.thirdLine.setVisibility(View.VISIBLE);
             holder.thirdLine.setText(thirdLineText);
         } else

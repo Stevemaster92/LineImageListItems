@@ -1,6 +1,7 @@
 package at.haselwanter.android.lili.adapters;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -37,7 +38,7 @@ public class TwoLineImageItemAdapter<T extends TwoLineImageItem> extends OneLine
         T item = getItem(position);
 
         String secondLineText = item.getSecondLine();
-        if (secondLineText != null && !secondLineText.equals("")) {
+        if (!TextUtils.isEmpty(secondLineText)) {
             holder.secondLine.setVisibility(View.VISIBLE);
             holder.secondLine.setText(secondLineText);
         } else

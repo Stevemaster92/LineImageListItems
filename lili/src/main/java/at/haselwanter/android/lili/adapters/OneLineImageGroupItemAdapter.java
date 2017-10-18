@@ -3,6 +3,7 @@ package at.haselwanter.android.lili.adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,7 +41,7 @@ public class OneLineImageGroupItemAdapter<T extends OneLineImageGroupItem> exten
         T item = getItem(position);
 
         String firstLineText = item.getFirstLine();
-        if (firstLineText != null && !firstLineText.equals("")) {
+        if (!TextUtils.isEmpty(firstLineText)) {
             holder.firstLine.setVisibility(View.VISIBLE);
             holder.firstLine.setText(firstLineText);
         } else

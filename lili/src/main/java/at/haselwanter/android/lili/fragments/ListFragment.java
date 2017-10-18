@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -56,10 +55,6 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
 
     public void setOnListItemActionListener(OnListItemActionListener listener) {
         this.listener = listener;
-    }
-
-    public void setOnScrollListener(AbsListView.OnScrollListener listener) {
-        listView.setOnScrollListener(listener);
     }
 
     @Override
