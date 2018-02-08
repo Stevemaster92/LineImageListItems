@@ -29,7 +29,7 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
     protected ListAdapter<T> adapter;
     protected ListView listView;
     protected OnListItemActionListener listener;
-    protected boolean isInitialized, loadingEnabled = true;
+    protected boolean isCreated, isInitialized, loadingEnabled = true;
     private LoadDataTask task;
 
     protected ListFragment() {
@@ -40,7 +40,24 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (loadingEnabled && !isInitialized)
+        // Load data only if tab is selected and another tab except the next predecessor/successor tab was previously selected.
+        if (loadingEnabled && !isInitialized && getUserVisibleHint())
+            loadDataWithProgressBar();
+
+        isCreated = true;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        // Cancel currently running task if fragment is not visible to the user anymore.
+        if (!isVisibleToUser && task != null && task.getStatus() == AsyncTask.Status.RUNNING) {
+            task.cancel(true);
+        }
+
+        // Load data only if tab is selected and the next predecessor/successor tab was previously selected.
+        if (!isInitialized && isVisibleToUser && isCreated)
             loadDataWithProgressBar();
     }
 
@@ -65,7 +82,7 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
     @Override
     protected void setupViews() {
         adapter = getAdapter();
-        listView = (ListView) view.findViewById(R.id.list);
+        listView = view.findViewById(R.id.list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
     }
@@ -180,7 +197,7 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
 
             List<T> items = loadData();
 
-            if (items == null)
+            if (!isCancelled() && items == null)
                 onNoDataLoaded();
 
             return items;
@@ -188,7 +205,7 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
 
         @Override
         protected void onPostExecute(final List<T> result) {
-            if (result != null && result.size() > 0) {
+            if (!isCancelled() && result != null && result.size() > 0) {
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
