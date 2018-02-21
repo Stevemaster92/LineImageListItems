@@ -35,6 +35,11 @@ public abstract class OneLineImageGroupItem<T extends OneLineImageItem> extends 
     }
 
     @Override
+    public void setChildren(List<T> children) {
+        this.children = children;
+    }
+
+    @Override
     public String toString() {
         return "OneLineImageGroupItem (" + id + ")";
     }

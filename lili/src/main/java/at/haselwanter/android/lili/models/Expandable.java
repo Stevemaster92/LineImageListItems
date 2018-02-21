@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface Expandable<T> {
     List<T> getChildren();
+
+    void setChildren(List<T> children);
 }
