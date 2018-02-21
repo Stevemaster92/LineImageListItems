@@ -39,7 +39,7 @@ public abstract class ListAdapter<T> extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return items.size();
+        return items != null ? items.size() : 0;
     }
 
     @Override
