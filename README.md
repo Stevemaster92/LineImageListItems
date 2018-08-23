@@ -32,7 +32,7 @@ In order to use the library:
  }
  ```
  
- 5. In Android Studio, select **Tools > Android > Sync Project with Gradle Files** or click **Sync Now**.
+ 5. In Android Studio, select **File > Sync Project with Gradle Files** or click **Sync Now**.
 
 ## Documentation
 Refer to the [Wiki](https://github.com/Stevemaster92/LineImageListItems/wiki) for more information about the library's components and how to integrate them in your Android app.
@@ -43,7 +43,7 @@ You can download an example Android application from [here](https://play.google.
 ## License
 LineImageListItems library for Android
 
-Copyright (c) 2017 Stefan Haselwanter (https://github.com/Stevemaster92).
+Copyright (c) 2018 Stefan Haselwanter (https://github.com/Stevemaster92).
 
 ```
 Licensed under the Apache License, Version 2.0 (the "License");
