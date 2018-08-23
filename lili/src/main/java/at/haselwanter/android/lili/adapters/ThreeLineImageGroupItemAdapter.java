@@ -53,7 +53,7 @@ public class ThreeLineImageGroupItemAdapter<T extends ThreeLineImageGroupItem> e
 
         public ViewHolder(View itemView) {
             super(itemView);
-            thirdLine = (TextView) itemView.findViewById(R.id.third_line);
+            thirdLine = itemView.findViewById(R.id.third_line);
         }
     }
 }

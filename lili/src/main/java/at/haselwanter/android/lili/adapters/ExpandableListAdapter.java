@@ -88,13 +88,20 @@ public abstract class ExpandableListAdapter<G extends Expandable<C>, C extends O
     public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         View rowView = childAdapters.get(groupPosition).getView(childPosition, convertView, parent);
 
-        // Set OnClickListener for child view.
+        // Set OnClickListeners for child view.
         if (listener != null) {
             final C item = getChild(groupPosition, childPosition);
             rowView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     listener.onListItemSelected(childPosition, item);
+                }
+            });
+            rowView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    listener.onListItemLongPress(childPosition, item);
+                    return true;
                 }
             });
         }

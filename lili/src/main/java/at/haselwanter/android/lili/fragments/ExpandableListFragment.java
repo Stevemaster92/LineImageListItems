@@ -3,10 +3,10 @@ package at.haselwanter.android.lili.fragments;
 import android.widget.ExpandableListView;
 
 import at.haselwanter.android.lili.R;
-import at.haselwanter.android.lili.adapters.ListAdapter;
 import at.haselwanter.android.lili.adapters.ExpandableListAdapter;
-import at.haselwanter.android.lili.models.OneLineImageItem;
+import at.haselwanter.android.lili.adapters.ListAdapter;
 import at.haselwanter.android.lili.models.OneLineImageGroupItem;
+import at.haselwanter.android.lili.models.OneLineImageItem;
 
 /**
  * A fragment extending the {@link ListFragment} by using an expandable list view and an {@link ExpandableListAdapter}.
@@ -26,7 +26,6 @@ public abstract class ExpandableListFragment<G extends OneLineImageGroupItem<C>,
         adapter = getExpandableAdapter();
         listView = (ExpandableListView) view.findViewById(R.id.list);
         ((ExpandableListView) listView).setAdapter(adapter);
-        listView.setOnItemClickListener(this);
     }
 
     @Override
@@ -38,7 +37,7 @@ public abstract class ExpandableListFragment<G extends OneLineImageGroupItem<C>,
     @Override
     protected final ListAdapter<G> getAdapter() {
         // Force to use the expandable list adapter.
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     protected abstract ExpandableListAdapter<G, C> getExpandableAdapter();

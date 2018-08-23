@@ -53,7 +53,7 @@ public class ThreeLineImageItemAdapter<T extends ThreeLineImageItem> extends Two
 
         public ViewHolder(View itemView) {
             super(itemView);
-            thirdLine = (TextView) itemView.findViewById(R.id.third_line);
+            thirdLine = itemView.findViewById(R.id.third_line);
         }
     }
 }

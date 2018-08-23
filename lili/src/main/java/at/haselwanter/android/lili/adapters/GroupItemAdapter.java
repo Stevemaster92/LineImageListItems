@@ -48,7 +48,7 @@ public abstract class GroupItemAdapter<T extends Expandable> extends ListAdapter
         public ImageView groupIndicator;
 
         public ViewHolder(View itemView) {
-            groupIndicator = (ImageView) itemView.findViewById(R.id.group_indicator);
+            groupIndicator = itemView.findViewById(R.id.group_indicator);
         }
     }
 }

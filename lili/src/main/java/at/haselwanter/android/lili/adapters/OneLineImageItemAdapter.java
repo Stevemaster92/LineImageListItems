@@ -74,8 +74,8 @@ public class OneLineImageItemAdapter<T extends OneLineImageItem> extends ListAda
         public ImageView image;
 
         public ViewHolder(View itemView) {
-            firstLine = (TextView) itemView.findViewById(R.id.first_line);
-            image = (ImageView) itemView.findViewById(R.id.image);
+            firstLine = itemView.findViewById(R.id.first_line);
+            image = itemView.findViewById(R.id.image);
         }
     }
 }

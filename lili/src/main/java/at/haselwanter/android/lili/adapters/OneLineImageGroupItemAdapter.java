@@ -77,8 +77,8 @@ public class OneLineImageGroupItemAdapter<T extends OneLineImageGroupItem> exten
 
         public ViewHolder(View itemView) {
             super(itemView);
-            firstLine = (TextView) itemView.findViewById(R.id.first_line);
-            image = (ImageView) itemView.findViewById(R.id.image);
+            firstLine = itemView.findViewById(R.id.first_line);
+            image = itemView.findViewById(R.id.image);
         }
     }
 }

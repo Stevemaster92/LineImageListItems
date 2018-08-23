@@ -36,7 +36,12 @@ public class ListActivity extends AppCompatActivity implements ListFragment.OnLi
 
     @Override
     public <T extends OneLineImageItem> void onListItemSelected(int position, T item) {
-        Toast.makeText(this, item + " @ " + position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Selected: " + item + " @ " + position, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public <T extends OneLineImageItem> void onListItemLongPress(int position, T item) {
+        Toast.makeText(this, "Long Press: " + item + " @ " + position, Toast.LENGTH_SHORT).show();
     }
 
     private ListFragment chooseFragment(int index) {

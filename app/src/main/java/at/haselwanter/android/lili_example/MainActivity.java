@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        LinearLayout buttonMenu = (LinearLayout) findViewById(R.id.button_menu);
+        LinearLayout buttonMenu = findViewById(R.id.button_menu);
         for (int i = 0; i < buttonMenu.getChildCount(); i++) {
             final int index = i;
             buttonMenu.getChildAt(i).setOnClickListener(new View.OnClickListener() {

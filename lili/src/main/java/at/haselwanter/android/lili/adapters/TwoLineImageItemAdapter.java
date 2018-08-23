@@ -53,7 +53,7 @@ public class TwoLineImageItemAdapter<T extends TwoLineImageItem> extends OneLine
 
         public ViewHolder(View itemView) {
             super(itemView);
-            secondLine = (TextView) itemView.findViewById(R.id.second_line);
+            secondLine = itemView.findViewById(R.id.second_line);
         }
     }
 }

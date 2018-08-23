@@ -24,7 +24,7 @@ import at.haselwanter.android.lili.models.OneLineImageItem;
  * <p/>
  * Created by Stefan Haselwanter on 14.09.2017
  */
-public abstract class ListFragment<T extends OneLineImageItem> extends TagFragment implements AdapterView.OnItemClickListener {
+public abstract class ListFragment<T extends OneLineImageItem> extends TagFragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
     protected List<T> list;
     protected ListAdapter<T> adapter;
     protected ListView listView;
@@ -63,11 +63,20 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (position >= list.size())
+        if (position >= list.size() || listener == null)
             return;
 
-        if (listener != null)
-            listener.onListItemSelected(position, adapter.getItem(position));
+        listener.onListItemSelected(position, adapter.getItem(position));
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        if (position >= list.size() || listener == null)
+            return false;
+
+        listener.onListItemLongPress(position, adapter.getItem(position));
+
+        return true;
     }
 
     public void setOnListItemActionListener(OnListItemActionListener listener) {
@@ -85,6 +94,7 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
         listView = view.findViewById(R.id.list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
+        listView.setOnItemLongClickListener(this);
     }
 
     /**
@@ -181,6 +191,8 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
          * @param item List item.
          */
         <T extends OneLineImageItem> void onListItemSelected(int position, T item);
+
+        <T extends OneLineImageItem> void onListItemLongPress(int position, T item);
     }
 
     /**
