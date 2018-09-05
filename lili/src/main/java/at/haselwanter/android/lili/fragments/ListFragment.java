@@ -256,5 +256,10 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
 
             super.onPostExecute(result);
         }
+
+        @Override
+        protected void onCancelled(List<T> ts) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 }
