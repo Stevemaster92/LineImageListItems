@@ -33,6 +33,20 @@ public abstract class ExpandableListAdapter<G extends Expandable<C>, C extends O
         updateChildAdapters();
     }
 
+    /**
+     * Clears a lists of group and child adapters.
+     */
+    public void clear() {
+        // Clear all child adapters.
+        for (int i = 0; i < childAdapters.size(); i++) {
+            childAdapters.get(i).clear();
+        }
+        // Clear group adapter.
+        groupAdapter.clear();
+        // Notify about changes.
+        notifyDataSetChanged();
+    }
+
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
@@ -100,7 +114,7 @@ public abstract class ExpandableListAdapter<G extends Expandable<C>, C extends O
             rowView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    listener.onListItemLongPress(childPosition, item);
+                    listener.onListItemLongPressed(childPosition, item);
                     return true;
                 }
             });

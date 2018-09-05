@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -12,7 +13,6 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import at.haselwanter.android.lili.LoadWithProgressBarTask;
 import at.haselwanter.android.lili.R;
 import at.haselwanter.android.lili.adapters.ListAdapter;
 import at.haselwanter.android.lili.models.OneLineImageItem;
@@ -24,10 +24,11 @@ import at.haselwanter.android.lili.models.OneLineImageItem;
  * <p/>
  * Created by Stefan Haselwanter on 14.09.2017
  */
-public abstract class ListFragment<T extends OneLineImageItem> extends TagFragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+public abstract class ListFragment<T extends OneLineImageItem> extends TagFragment implements /*LoaderManager.LoaderCallbacks<T>,*/ AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
     protected List<T> list;
     protected ListAdapter<T> adapter;
     protected ListView listView;
+    protected SwipeRefreshLayout swipeRefreshLayout;
     protected OnListItemActionListener listener;
     protected boolean isCreated, isInitialized, loadingEnabled = true;
     private LoadDataTask task;
@@ -41,10 +42,15 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
         super.onActivityCreated(savedInstanceState);
 
         // Load data only if tab is selected and another tab except the next predecessor/successor tab was previously selected.
-        if (loadingEnabled && !isInitialized && getUserVisibleHint())
-            loadDataWithProgressBar();
+        if (loadingEnabled && !isInitialized && getUserVisibleHint()) {
+            setRefreshing(true);
+            startLoadDataTask();
+        }
 
         isCreated = true;
+
+        // The main load has ID = 0.
+        //getLoaderManager().initLoader(0, null, this);
     }
 
     @Override
@@ -57,8 +63,10 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
         }
 
         // Load data only if tab is selected and the next predecessor/successor tab was previously selected.
-        if (!isInitialized && isVisibleToUser && isCreated)
-            loadDataWithProgressBar();
+        if (!isInitialized && isVisibleToUser && isCreated) {
+            setRefreshing(true);
+            startLoadDataTask();
+        }
     }
 
     @Override
@@ -74,7 +82,7 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
         if (position >= list.size() || listener == null)
             return false;
 
-        listener.onListItemLongPress(position, adapter.getItem(position));
+        listener.onListItemLongPressed(position, adapter.getItem(position));
 
         return true;
     }
@@ -95,6 +103,34 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
         listView.setOnItemLongClickListener(this);
+
+        swipeRefreshLayout = view.findViewById(R.id.root);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshList();
+            }
+        });
+    }
+
+    /**
+     * Notify the widget that refresh state has changed. Do not call this when
+     * refresh is triggered by a swipe gesture.
+     *
+     * @param refreshing Whether or not the view should show refresh progress.
+     */
+    public void setRefreshing(boolean refreshing) {
+        swipeRefreshLayout.setRefreshing(refreshing);
+    }
+
+    /**
+     * Refreshes the list and reloads data.
+     */
+    public void refreshList() {
+        adapter.clear();
+        isInitialized = false;
+
+        startLoadDataTask();
     }
 
     /**
@@ -154,14 +190,10 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
      */
     protected abstract ListAdapter<T> getAdapter();
 
-    protected String getLoadingText() {
-        return "Loading...";
-    }
-
     /**
      * Starts a new task with a progress bar for loading data.
      */
-    protected void loadDataWithProgressBar() {
+    protected void startLoadDataTask() {
         if (task == null || task.getStatus() == AsyncTask.Status.FINISHED)
             task = new LoadDataTask();
 
@@ -192,24 +224,18 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
          */
         <T extends OneLineImageItem> void onListItemSelected(int position, T item);
 
-        <T extends OneLineImageItem> void onListItemLongPress(int position, T item);
+        <T extends OneLineImageItem> void onListItemLongPressed(int position, T item);
     }
 
     /**
      * An asynchronous task to load arbitrary data.
      */
-    private class LoadDataTask extends LoadWithProgressBarTask<Integer, Void, List<T>> {
-        public LoadDataTask() {
-            super(getContext(), listView, getLoadingText());
-        }
-
+    private class LoadDataTask extends AsyncTask<Integer, Void, List<T>> {
         @Override
         protected List<T> doInBackground(Integer... params) {
-            super.doInBackground(params);
-
             List<T> items = loadData();
 
-            if (!isCancelled() && items == null)
+            if (isCancelled() || items == null)
                 onNoDataLoaded();
 
             return items;
@@ -223,6 +249,7 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
                     public void run() {
                         updateList(result);
                         isInitialized = true;
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 });
             }

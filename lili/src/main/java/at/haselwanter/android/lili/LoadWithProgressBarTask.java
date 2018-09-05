@@ -60,7 +60,7 @@ public abstract class LoadWithProgressBarTask<Params, Progress, Result> extends 
                     isProgressBarVisible = false;
                     if (parent instanceof ListView)
                         ((ListView) parent).removeFooterView(progressBar);
-                    else if (progressBar.getParent() != null)
+                    else if (parent != null && progressBar.getParent() != null)
                         parent.removeViewAt(0);
                 }
             }

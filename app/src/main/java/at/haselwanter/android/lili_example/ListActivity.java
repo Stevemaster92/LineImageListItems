@@ -3,6 +3,9 @@ package at.haselwanter.android.lili_example;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import at.haselwanter.android.lili.fragments.ListFragment;
@@ -23,15 +26,42 @@ import at.haselwanter.android.lili_example.fragments.TwoTwoItemFragment;
 
 public class ListActivity extends AppCompatActivity implements ListFragment.OnListItemActionListener {
     public static final int NUMBER_OF_ITEMS = 10;
+    private ListFragment listFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        ListFragment lf = chooseFragment(getIntent().getIntExtra(MainActivity.TAG_LIST_INDEX, -1));
-        lf.setOnListItemActionListener(this);
-        showFragment(lf);
+        listFragment = chooseFragment(getIntent().getIntExtra(MainActivity.TAG_LIST_INDEX, -1));
+        listFragment.setOnListItemActionListener(this);
+        showFragment(listFragment);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                // Signal SwipeRefreshLayout to start the progress indicator
+                listFragment.setRefreshing(true);
+                // Start the refresh background task.
+                // This method calls setRefreshing(false) when it's finished.
+                listFragment.refreshList();
+                return true;
+            case R.id.help:
+                Toast.makeText(this, "Please select an item", Toast.LENGTH_SHORT).show();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.list_menu, menu);
+
+        return true;
     }
 
     @Override
@@ -40,7 +70,7 @@ public class ListActivity extends AppCompatActivity implements ListFragment.OnLi
     }
 
     @Override
-    public <T extends OneLineImageItem> void onListItemLongPress(int position, T item) {
+    public <T extends OneLineImageItem> void onListItemLongPressed(int position, T item) {
         Toast.makeText(this, "Long Press: " + item + " @ " + position, Toast.LENGTH_SHORT).show();
     }
 
@@ -87,5 +117,13 @@ public class ListActivity extends AppCompatActivity implements ListFragment.OnLi
             ft.replace(R.id.fragment_container, fragment, fragment.getFragmentTag());
 
         ft.commit();
+    }
+
+    public static void simulateWaitingForData() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

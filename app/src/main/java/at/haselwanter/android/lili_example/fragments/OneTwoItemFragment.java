@@ -30,6 +30,8 @@ public class OneTwoItemFragment extends ExpandableListFragment<OneGroupTwoChildI
         List<OneGroupTwoChildItem> groups = new ArrayList<>();
         List<TwoLineDummy> children = new ArrayList<>();
 
+        ListActivity.simulateWaitingForData();
+
         for (int i = 0; i < ListActivity.NUMBER_OF_ITEMS / 2; i++)
             children.add(new TwoLineDummy());
         for (int i = 0; i < ListActivity.NUMBER_OF_ITEMS; i++)

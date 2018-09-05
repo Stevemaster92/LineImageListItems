@@ -28,6 +28,8 @@ public class OneItemFragment extends ListFragment<OneLineDummy> {
     public List<OneLineDummy> loadData() {
         List<OneLineDummy> list = new ArrayList<>();
 
+        ListActivity.simulateWaitingForData();
+
         for (int i = 0; i < ListActivity.NUMBER_OF_ITEMS; i++)
             list.add(new OneLineDummy());
 

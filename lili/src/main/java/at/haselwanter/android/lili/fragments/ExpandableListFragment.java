@@ -1,5 +1,6 @@
 package at.haselwanter.android.lili.fragments;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.ExpandableListView;
 
 import at.haselwanter.android.lili.R;
@@ -16,6 +17,16 @@ import at.haselwanter.android.lili.models.OneLineImageItem;
 public abstract class ExpandableListFragment<G extends OneLineImageGroupItem<C>, C extends OneLineImageItem> extends ListFragment<G> {
     private ExpandableListAdapter<G, C> adapter;
 
+    /**
+     * Refreshes the list and reloads data.
+     */
+    public void refreshList() {
+        adapter.clear();
+        isInitialized = false;
+
+        startLoadDataTask();
+    }
+
     @Override
     protected int getLayoutResource() {
         return R.layout.expandable_list;
@@ -26,6 +37,14 @@ public abstract class ExpandableListFragment<G extends OneLineImageGroupItem<C>,
         adapter = getExpandableAdapter();
         listView = (ExpandableListView) view.findViewById(R.id.list);
         ((ExpandableListView) listView).setAdapter(adapter);
+
+        swipeRefreshLayout = view.findViewById(R.id.root);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshList();
+            }
+        });
     }
 
     @Override

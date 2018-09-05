@@ -30,6 +30,8 @@ public class ThreeThreeItemFragment extends ExpandableListFragment<ThreeGroupThr
         List<ThreeGroupThreeChildItem> groups = new ArrayList<>();
         List<ThreeLineDummy> children = new ArrayList<>();
 
+        ListActivity.simulateWaitingForData();
+
         for (int i = 0; i < ListActivity.NUMBER_OF_ITEMS / 2; i++)
             children.add(new ThreeLineDummy());
         for (int i = 0; i < ListActivity.NUMBER_OF_ITEMS; i++)

@@ -27,6 +27,8 @@ public class ThreeItemFragment extends ListFragment<ThreeLineDummy> {
     public List<ThreeLineDummy> loadData() {
         List<ThreeLineDummy> list = new ArrayList<>();
 
+        ListActivity.simulateWaitingForData();
+
         for (int i = 0; i < ListActivity.NUMBER_OF_ITEMS; i++)
             list.add(new ThreeLineDummy());
 
