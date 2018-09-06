@@ -119,8 +119,13 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
      *
      * @param refreshing Whether or not the view should show refresh progress.
      */
-    public void setRefreshing(boolean refreshing) {
-        swipeRefreshLayout.setRefreshing(refreshing);
+    public void setRefreshing(final boolean refreshing) {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(refreshing);
+            }
+        });
     }
 
     /**
