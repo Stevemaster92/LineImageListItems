@@ -235,8 +235,10 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
         protected List<T> doInBackground(Integer... params) {
             List<T> items = loadData();
 
-            if (isCancelled() || items == null)
+            if (isCancelled() || items == null) {
                 onNoDataLoaded();
+                setRefreshing(false);
+            }
 
             return items;
         }
@@ -249,7 +251,7 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
                     public void run() {
                         updateList(result);
                         isInitialized = true;
-                        swipeRefreshLayout.setRefreshing(false);
+                        setRefreshing(false);
                     }
                 });
             }
@@ -258,8 +260,8 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
         }
 
         @Override
-        protected void onCancelled(List<T> ts) {
-            swipeRefreshLayout.setRefreshing(false);
+        protected void onCancelled(List<T> result) {
+            setRefreshing(false);
         }
     }
 }
