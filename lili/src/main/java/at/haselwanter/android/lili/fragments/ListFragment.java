@@ -74,7 +74,7 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
         if (position >= list.size() || listener == null)
             return;
 
-        listener.onListItemSelected(position, adapter.getItem(position));
+        listener.onListItemSelected(position, adapter.getItem(position), view);
     }
 
     @Override
@@ -82,7 +82,7 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
         if (position >= list.size() || listener == null)
             return false;
 
-        listener.onListItemLongPressed(position, adapter.getItem(position));
+        listener.onListItemLongPressed(position, adapter.getItem(position), view);
 
         return true;
     }
@@ -227,9 +227,9 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
          *
          * @param item List item.
          */
-        <T extends OneLineImageItem> void onListItemSelected(int position, T item);
+        <T extends OneLineImageItem> void onListItemSelected(int position, T item, View view);
 
-        <T extends OneLineImageItem> void onListItemLongPressed(int position, T item);
+        <T extends OneLineImageItem> void onListItemLongPressed(int position, T item, View view);
     }
 
     /**

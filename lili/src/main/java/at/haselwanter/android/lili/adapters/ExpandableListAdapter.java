@@ -9,8 +9,8 @@ import android.widget.BaseExpandableListAdapter;
 import java.util.List;
 
 import at.haselwanter.android.lili.fragments.ListFragment;
-import at.haselwanter.android.lili.models.OneLineImageItem;
 import at.haselwanter.android.lili.models.Expandable;
+import at.haselwanter.android.lili.models.OneLineImageItem;
 
 /**
  * A placeholder list adapter for expanding group items (classes extending {@link Expandable}) and their child items (classes extending
@@ -100,7 +100,7 @@ public abstract class ExpandableListAdapter<G extends Expandable<C>, C extends O
 
     @Override
     public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        View rowView = childAdapters.get(groupPosition).getView(childPosition, convertView, parent);
+        final View rowView = childAdapters.get(groupPosition).getView(childPosition, convertView, parent);
 
         // Set OnClickListeners for child view.
         if (listener != null) {
@@ -108,13 +108,13 @@ public abstract class ExpandableListAdapter<G extends Expandable<C>, C extends O
             rowView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onListItemSelected(childPosition, item);
+                    listener.onListItemSelected(childPosition, item, rowView);
                 }
             });
             rowView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    listener.onListItemLongPressed(childPosition, item);
+                    listener.onListItemLongPressed(childPosition, item, rowView);
                     return true;
                 }
             });

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import at.haselwanter.android.lili.fragments.ListFragment;
@@ -65,12 +66,12 @@ public class ListActivity extends AppCompatActivity implements ListFragment.OnLi
     }
 
     @Override
-    public <T extends OneLineImageItem> void onListItemSelected(int position, T item) {
+    public <T extends OneLineImageItem> void onListItemSelected(int position, T item, View view) {
         Toast.makeText(this, "Selected: " + item + " @ " + position, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public <T extends OneLineImageItem> void onListItemLongPressed(int position, T item) {
+    public <T extends OneLineImageItem> void onListItemLongPressed(int position, T item, View view) {
         Toast.makeText(this, "Long Press: " + item + " @ " + position, Toast.LENGTH_SHORT).show();
     }
 
