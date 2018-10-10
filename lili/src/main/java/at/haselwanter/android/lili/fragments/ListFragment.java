@@ -39,7 +39,7 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
         super.onActivityCreated(savedInstanceState);
 
         setRefreshing(true);
-        model.getItems().observe(getActivity(), items -> {
+        model.getData().observe(getActivity(), items -> {
             updateList(items);
             setRefreshing(false);
         });
