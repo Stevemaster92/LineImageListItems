@@ -8,7 +8,7 @@ import at.haselwanter.android.lili_example.R;
  */
 
 public class ThreeLineDummy extends ThreeLineImageItem {
-    public ThreeLineDummy() {
-        super(0, "First line", "Second line", "Third line", R.drawable.ic_android);
+    public ThreeLineDummy(long id, String name, String position, String description) {
+        super(id, name, position, description, R.drawable.ic_android);
     }
 }

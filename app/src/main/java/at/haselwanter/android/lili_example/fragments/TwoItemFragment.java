@@ -1,18 +1,16 @@
 package at.haselwanter.android.lili_example.fragments;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import at.haselwanter.android.lili.adapters.ListAdapter;
 import at.haselwanter.android.lili.adapters.TwoLineImageItemAdapter;
 import at.haselwanter.android.lili.fragments.ListFragment;
-import at.haselwanter.android.lili_example.ListActivity;
 import at.haselwanter.android.lili_example.models.TwoLineDummy;
+import at.haselwanter.android.lili_example.viewmodels.TwoLineDummyModel;
+
 
 /**
  * Created by Stefan Haselwanter on 14.09.2017.
  */
-public class TwoItemFragment extends ListFragment<TwoLineDummy> {
+public class TwoItemFragment extends ListFragment<TwoLineDummy, TwoLineDummyModel> {
     @Override
     public String getFragmentTag() {
         return "two_item_fragment";
@@ -24,19 +22,11 @@ public class TwoItemFragment extends ListFragment<TwoLineDummy> {
     }
 
     @Override
-    public List<TwoLineDummy> loadData() {
-        List<TwoLineDummy> list = new ArrayList<>();
-
-        ListActivity.simulateWaitingForData();
-
-        for (int i = 0; i < ListActivity.NUMBER_OF_ITEMS; i++)
-            list.add(new TwoLineDummy());
-
-        return list;
+    protected Class<TwoLineDummyModel> getModelClass() {
+        return TwoLineDummyModel.class;
     }
 
-    @Override
-    public void onNoDataLoaded() {
-
+    public void loadMoreData() {
+        model.loadDataAsync();
     }
 }

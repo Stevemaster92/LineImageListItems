@@ -11,4 +11,9 @@
         android:icon="@drawable/ic_help_outline"
         android:title="Help"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/add"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="Add Items"
+        app:showAsAction="ifRoom" />
 </menu>

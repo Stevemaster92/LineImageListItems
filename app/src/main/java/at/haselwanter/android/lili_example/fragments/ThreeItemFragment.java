@@ -1,18 +1,16 @@
 package at.haselwanter.android.lili_example.fragments;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import at.haselwanter.android.lili.adapters.ListAdapter;
 import at.haselwanter.android.lili.adapters.ThreeLineImageItemAdapter;
 import at.haselwanter.android.lili.fragments.ListFragment;
-import at.haselwanter.android.lili_example.ListActivity;
 import at.haselwanter.android.lili_example.models.ThreeLineDummy;
+import at.haselwanter.android.lili_example.viewmodels.ThreeLineDummyModel;
+
 
 /**
  * Created by Stefan Haselwanter on 14.09.2017.
  */
-public class ThreeItemFragment extends ListFragment<ThreeLineDummy> {
+public class ThreeItemFragment extends ListFragment<ThreeLineDummy, ThreeLineDummyModel> {
     @Override
     public String getFragmentTag() {
         return "three_item_fragment";
@@ -24,19 +22,11 @@ public class ThreeItemFragment extends ListFragment<ThreeLineDummy> {
     }
 
     @Override
-    public List<ThreeLineDummy> loadData() {
-        List<ThreeLineDummy> list = new ArrayList<>();
-
-        ListActivity.simulateWaitingForData();
-
-        for (int i = 0; i < ListActivity.NUMBER_OF_ITEMS; i++)
-            list.add(new ThreeLineDummy());
-
-        return list;
+    protected Class<ThreeLineDummyModel> getModelClass() {
+        return ThreeLineDummyModel.class;
     }
 
-    @Override
-    public void onNoDataLoaded() {
-
+    public void loadMoreData() {
+        model.loadDataAsync();
     }
 }

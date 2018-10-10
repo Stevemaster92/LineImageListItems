@@ -2,7 +2,7 @@ package at.haselwanter.android.lili.models;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
+import androidx.annotation.DrawableRes;
 
 /**
  * A list item containing three lines of text and one image.

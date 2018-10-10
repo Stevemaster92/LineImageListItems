@@ -8,7 +8,7 @@ import at.haselwanter.android.lili_example.R;
  */
 
 public class TwoLineDummy extends TwoLineImageItem {
-    public TwoLineDummy() {
-        super(0, "First line", "Second line", R.drawable.ic_android);
+    public TwoLineDummy(long id, String name, String position) {
+        super(id, name, position, R.drawable.ic_android);
     }
 }

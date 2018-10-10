@@ -1,11 +1,8 @@
 package at.haselwanter.android.lili.fragments;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -13,25 +10,25 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import at.haselwanter.android.lili.R;
 import at.haselwanter.android.lili.adapters.ListAdapter;
+import at.haselwanter.android.lili.models.BaseViewModel;
 import at.haselwanter.android.lili.models.OneLineImageItem;
 
 /**
  * A fragment containing a simple list view of items extending the {@link OneLineImageItem} class.
- * The data for the list is loaded by an asynchronous {@link LoadDataTask} in the background after the fragment is created and the list items are
- * populated by a {@link ListAdapter} afterwards.
+ * The data for the list is loaded via a background task following the {@link androidx.lifecycle.ViewModel} pattern and populated by a {@link ListAdapter}.
  * <p/>
- * Created by Stefan Haselwanter on 14.09.2017
+ * Created by Stefan Haselwanter on 10.10.2018
  */
-public abstract class ListFragment<T extends OneLineImageItem> extends TagFragment implements /*LoaderManager.LoaderCallbacks<T>,*/ AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+public abstract class ListFragment<T extends OneLineImageItem, M extends BaseViewModel<T>> extends BaseFragment<M> implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
     protected List<T> list;
     protected ListAdapter<T> adapter;
     protected ListView listView;
     protected SwipeRefreshLayout swipeRefreshLayout;
     protected OnListItemActionListener listener;
-    protected boolean isCreated, isInitialized, loadingEnabled = true;
-    private LoadDataTask task;
 
     protected ListFragment() {
         list = new ArrayList<>();
@@ -41,32 +38,11 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // Load data only if tab is selected and another tab except the next predecessor/successor tab was previously selected.
-        if (loadingEnabled && !isInitialized && getUserVisibleHint()) {
-            setRefreshing(true);
-            startLoadDataTask();
-        }
-
-        isCreated = true;
-
-        // The main load has ID = 0.
-        //getLoaderManager().initLoader(0, null, this);
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-
-        // Cancel currently running task if fragment is not visible to the user anymore.
-        if (!isVisibleToUser && task != null && task.getStatus() == AsyncTask.Status.RUNNING) {
-            task.cancel(true);
-        }
-
-        // Load data only if tab is selected and the next predecessor/successor tab was previously selected.
-        if (!isInitialized && isVisibleToUser && isCreated) {
-            setRefreshing(true);
-            startLoadDataTask();
-        }
+        setRefreshing(true);
+        model.getItems().observe(getActivity(), items -> {
+            updateList(items);
+            setRefreshing(false);
+        });
     }
 
     @Override
@@ -91,28 +67,6 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
         this.listener = listener;
     }
 
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.list;
-    }
-
-    @Override
-    protected void setupViews() {
-        adapter = getAdapter();
-        listView = view.findViewById(R.id.list);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(this);
-        listView.setOnItemLongClickListener(this);
-
-        swipeRefreshLayout = view.findViewById(R.id.root);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshList();
-            }
-        });
-    }
-
     /**
      * Notify the widget that refresh state has changed. Do not call this when
      * refresh is triggered by a swipe gesture.
@@ -120,12 +74,7 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
      * @param refreshing Whether or not the view should show refresh progress.
      */
     public void setRefreshing(final boolean refreshing) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                swipeRefreshLayout.setRefreshing(refreshing);
-            }
-        });
+        new Handler(Looper.getMainLooper()).post(() -> swipeRefreshLayout.setRefreshing(refreshing));
     }
 
     /**
@@ -133,9 +82,25 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
      */
     public void refreshList() {
         adapter.clear();
-        isInitialized = false;
+        model.refreshData();
+    }
 
-        startLoadDataTask();
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.list;
+    }
+
+    @Override
+    protected void setupViews() {
+        listView = view.findViewById(R.id.list);
+        listView.setOnItemClickListener(this);
+        listView.setOnItemLongClickListener(this);
+
+        adapter = getAdapter();
+        listView.setAdapter(adapter);
+
+        swipeRefreshLayout = view.findViewById(R.id.root);
+        swipeRefreshLayout.setOnRefreshListener(this::refreshList);
     }
 
     /**
@@ -144,6 +109,7 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
      * @param nextItems The list of items to add next.
      */
     protected void updateList(List<T> nextItems) {
+        list.clear();
         list.addAll(nextItems);
         notifyAdapter();
     }
@@ -196,29 +162,6 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
     protected abstract ListAdapter<T> getAdapter();
 
     /**
-     * Starts a new task with a progress bar for loading data.
-     */
-    protected void startLoadDataTask() {
-        if (task == null || task.getStatus() == AsyncTask.Status.FINISHED)
-            task = new LoadDataTask();
-
-        if (task.getStatus() == AsyncTask.Status.PENDING)
-            task.execute();
-    }
-
-    /**
-     * Loads data from external source and returns them as list.
-     *
-     * @return The list of arbitrary data.
-     */
-    protected abstract List<T> loadData();
-
-    /**
-     * Callback method to be invoked if no data was loaded by {@link #loadData()}.
-     */
-    protected abstract void onNoDataLoaded();
-
-    /**
      * A listener for performing actions on list items.
      */
     public interface OnListItemActionListener {
@@ -230,43 +173,5 @@ public abstract class ListFragment<T extends OneLineImageItem> extends TagFragme
         <T extends OneLineImageItem> void onListItemSelected(int position, T item, View view);
 
         <T extends OneLineImageItem> void onListItemLongPressed(int position, T item, View view);
-    }
-
-    /**
-     * An asynchronous task to load arbitrary data.
-     */
-    private class LoadDataTask extends AsyncTask<Integer, Void, List<T>> {
-        @Override
-        protected List<T> doInBackground(Integer... params) {
-            List<T> items = loadData();
-
-            if (isCancelled() || items == null) {
-                onNoDataLoaded();
-                setRefreshing(false);
-            }
-
-            return items;
-        }
-
-        @Override
-        protected void onPostExecute(final List<T> result) {
-            if (!isCancelled() && result != null && result.size() > 0) {
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        updateList(result);
-                        isInitialized = true;
-                        setRefreshing(false);
-                    }
-                });
-            }
-
-            super.onPostExecute(result);
-        }
-
-        @Override
-        protected void onCancelled(List<T> result) {
-            setRefreshing(false);
-        }
     }
 }

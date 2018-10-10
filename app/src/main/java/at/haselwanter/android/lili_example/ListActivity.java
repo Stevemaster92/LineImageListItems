@@ -1,29 +1,20 @@
 package at.haselwanter.android.lili_example;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import at.haselwanter.android.lili.fragments.ListFragment;
 import at.haselwanter.android.lili.fragments.TagFragment;
 import at.haselwanter.android.lili.models.OneLineImageItem;
 import at.haselwanter.android.lili_example.fragments.OneItemFragment;
-import at.haselwanter.android.lili_example.fragments.OneOneItemFragment;
-import at.haselwanter.android.lili_example.fragments.OneThreeItemFragment;
-import at.haselwanter.android.lili_example.fragments.OneTwoItemFragment;
 import at.haselwanter.android.lili_example.fragments.ThreeItemFragment;
-import at.haselwanter.android.lili_example.fragments.ThreeOneItemFragment;
-import at.haselwanter.android.lili_example.fragments.ThreeThreeItemFragment;
-import at.haselwanter.android.lili_example.fragments.ThreeTwoItemFragment;
 import at.haselwanter.android.lili_example.fragments.TwoItemFragment;
-import at.haselwanter.android.lili_example.fragments.TwoOneItemFragment;
-import at.haselwanter.android.lili_example.fragments.TwoThreeItemFragment;
-import at.haselwanter.android.lili_example.fragments.TwoTwoItemFragment;
 
 public class ListActivity extends AppCompatActivity implements ListFragment.OnListItemActionListener {
     public static final int NUMBER_OF_ITEMS = 10;
@@ -52,6 +43,14 @@ public class ListActivity extends AppCompatActivity implements ListFragment.OnLi
             case R.id.help:
                 Toast.makeText(this, "Please select an item", Toast.LENGTH_SHORT).show();
                 return true;
+            case R.id.add:
+                listFragment.setRefreshing(true);
+                if (listFragment instanceof OneItemFragment)
+                    ((OneItemFragment) listFragment).loadMoreData();
+                else if (listFragment instanceof TwoItemFragment)
+                    ((TwoItemFragment) listFragment).loadMoreData();
+                else if (listFragment instanceof ThreeItemFragment)
+                    ((ThreeItemFragment) listFragment).loadMoreData();
         }
 
         return super.onOptionsItemSelected(item);
@@ -85,27 +84,27 @@ public class ListActivity extends AppCompatActivity implements ListFragment.OnLi
                 return new TwoItemFragment();
             case 2:
                 return new ThreeItemFragment();
-            // List fragments with 1-line group items and 1-line, 2-line, or 3-line child items.
-            case 3:
-                return new OneOneItemFragment();
-            case 4:
-                return new OneTwoItemFragment();
-            case 5:
-                return new OneThreeItemFragment();
-            // List fragments with 2-line group items and 1-line, 2-line, or 3-line child items.
-            case 6:
-                return new TwoOneItemFragment();
-            case 7:
-                return new TwoTwoItemFragment();
-            case 8:
-                return new TwoThreeItemFragment();
-            // List fragments with 3-line group items and 1-line, 2-line, or 3-line child items.
-            case 9:
-                return new ThreeOneItemFragment();
-            case 10:
-                return new ThreeTwoItemFragment();
-            case 11:
-                return new ThreeThreeItemFragment();
+//            // List fragments with 1-line group items and 1-line, 2-line, or 3-line child items.
+//            case 3:
+//                return new OneOneItemFragment();
+//            case 4:
+//                return new OneTwoItemFragment();
+//            case 5:
+//                return new OneThreeItemFragment();
+//            // List fragments with 2-line group items and 1-line, 2-line, or 3-line child items.
+//            case 6:
+//                return new TwoOneItemFragment();
+//            case 7:
+//                return new TwoTwoItemFragment();
+//            case 8:
+//                return new TwoThreeItemFragment();
+//            // List fragments with 3-line group items and 1-line, 2-line, or 3-line child items.
+//            case 9:
+//                return new ThreeOneItemFragment();
+//            case 10:
+//                return new ThreeTwoItemFragment();
+//            case 11:
+//                return new ThreeThreeItemFragment();
         }
     }
 
