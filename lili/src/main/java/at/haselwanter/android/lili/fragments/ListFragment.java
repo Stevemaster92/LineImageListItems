@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,12 +38,8 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        setRefreshing(true);
-        model.getData().observe(getActivity(), items -> {
-            updateList(items);
-            setRefreshing(false);
-        });
+        observeData();
+        observeError();
     }
 
     @Override
@@ -101,6 +98,21 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
 
         swipeRefreshLayout = view.findViewById(R.id.root);
         swipeRefreshLayout.setOnRefreshListener(this::refreshList);
+    }
+
+    protected void observeData() {
+        setRefreshing(true);
+        model.getData().observe(getActivity(), items -> {
+            updateList(items);
+            setRefreshing(false);
+        });
+    }
+
+    protected void observeError() {
+        model.getError().observe(getActivity(), error -> {
+            Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            setRefreshing(false);
+        });
     }
 
     /**

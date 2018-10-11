@@ -14,6 +14,7 @@ import androidx.lifecycle.MutableLiveData;
 
 public abstract class BaseViewModel<T> extends AndroidViewModel {
     protected MutableLiveData<List<T>> data;
+    protected MutableLiveData<DataError> error;
     protected Context context;
 
     public BaseViewModel(@NonNull Application application) {
@@ -24,10 +25,23 @@ public abstract class BaseViewModel<T> extends AndroidViewModel {
     public MutableLiveData<List<T>> getData() {
         if (data == null) {
             data = new MutableLiveData<>();
+            getError();
             loadDataAsync();
         }
 
         return data;
+    }
+
+    public MutableLiveData<DataError> getError() {
+        if (error == null) {
+            error = new MutableLiveData<>();
+        }
+
+        return error;
+    }
+
+    protected void setError(int code, String message) {
+        this.error.setValue(new DataError(code, message));
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -45,12 +59,10 @@ public abstract class BaseViewModel<T> extends AndroidViewModel {
 
             @Override
             protected void onPostExecute(List<T> data) {
-                if (data == null || data.isEmpty() || isCancelled()) {
-                    onNoDataLoaded();
+                if (data == null || data.isEmpty() || isCancelled())
                     return;
-                }
 
-                onPrepareData(data);
+                onDataPreparing(data);
 
                 List<T> list = BaseViewModel.this.data.getValue();
                 if (list != null && !list.isEmpty()) {
@@ -72,8 +84,9 @@ public abstract class BaseViewModel<T> extends AndroidViewModel {
     protected abstract List<T> onDataLoading(Object... args);
 
     protected void onNoDataLoaded() {
+        setError(404, "No data loaded");
     }
 
-    protected void onPrepareData(List<T> data) {
+    protected void onDataPreparing(List<T> data) {
     }
 }
