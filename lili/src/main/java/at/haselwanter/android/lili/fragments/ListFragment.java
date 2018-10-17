@@ -77,9 +77,9 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
     /**
      * Refreshes the list and reloads data.
      */
-    public void refreshList() {
+    public void refreshList(Object... args) {
         adapter.clear();
-        model.refreshData();
+        model.refreshData(args);
     }
 
     @Override

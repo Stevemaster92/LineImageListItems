@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Looper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +23,11 @@ public abstract class BaseViewModel<T> extends AndroidViewModel {
         context = application.getApplicationContext();
     }
 
-    public MutableLiveData<List<T>> getData() {
+    public MutableLiveData<List<T>> getData(Object... args) {
         if (data == null) {
             data = new MutableLiveData<>();
             getError();
-            loadDataAsync();
+            loadDataAsync(args);
         }
 
         return data;
@@ -41,7 +42,10 @@ public abstract class BaseViewModel<T> extends AndroidViewModel {
     }
 
     protected void setError(int code, String message) {
-        this.error.setValue(new DataError(code, message));
+        if (Thread.currentThread().equals(Looper.getMainLooper().getThread()))
+            error.setValue(new DataError(code, message));
+        else
+            error.postValue(new DataError(code, message));
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -54,6 +58,8 @@ public abstract class BaseViewModel<T> extends AndroidViewModel {
                 if (data == null || data.isEmpty() || isCancelled())
                     onNoDataLoaded();
 
+                onDataPreparing(data);
+
                 return data;
             }
 
@@ -61,8 +67,6 @@ public abstract class BaseViewModel<T> extends AndroidViewModel {
             protected void onPostExecute(List<T> data) {
                 if (data == null || data.isEmpty() || isCancelled())
                     return;
-
-                onDataPreparing(data);
 
                 List<T> list = BaseViewModel.this.data.getValue();
                 if (list != null && !list.isEmpty()) {
