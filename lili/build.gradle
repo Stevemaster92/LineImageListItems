@@ -28,7 +28,7 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api 'androidx.annotation:annotation:1.0.0'
-    api 'androidx.appcompat:appcompat:1.0.0'
+    api 'androidx.appcompat:appcompat:1.0.2'
 
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"

@@ -81,8 +81,10 @@ public abstract class BaseViewModel<T> extends AndroidViewModel {
     }
 
     public void refreshData(Object... args) {
-        data.getValue().clear();
-        loadDataAsync(args);
+        if (data.getValue() != null) {
+            data.getValue().clear();
+            loadDataAsync(args);
+        }
     }
 
     protected abstract List<T> onDataLoading(Object... args);
