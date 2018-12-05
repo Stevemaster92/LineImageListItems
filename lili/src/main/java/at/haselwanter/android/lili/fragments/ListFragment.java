@@ -1,5 +1,6 @@
 package at.haselwanter.android.lili.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -36,6 +37,20 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        // Verify that the host activity implements the callback interface.
+        try {
+            // Instantiate the listener so we can send events to the host.
+            listener = (OnListItemActionListener) context;
+        } catch (ClassCastException e) {
+            // The activity doesn't implement the interface, throw exception.
+            throw new ClassCastException(context.toString()
+                    + " must implement OnListItemActionListener");
+        }
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         observeData();
@@ -58,10 +73,6 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
         listener.onListItemLongPressed(position, adapter.getItem(position), view);
 
         return true;
-    }
-
-    public void setOnListItemActionListener(OnListItemActionListener listener) {
-        this.listener = listener;
     }
 
     /**
