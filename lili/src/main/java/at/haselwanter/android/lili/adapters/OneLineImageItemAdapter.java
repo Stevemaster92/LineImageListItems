@@ -1,6 +1,5 @@
 package at.haselwanter.android.lili.adapters;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
@@ -10,6 +9,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import at.haselwanter.android.lili.R;
 import at.haselwanter.android.lili.models.OneLineImageItem;
 
@@ -19,8 +20,45 @@ import at.haselwanter.android.lili.models.OneLineImageItem;
  * Created by Stefan Haselwanter on 14.09.2017.
  */
 public class OneLineImageItemAdapter<T extends OneLineImageItem> extends ListAdapter<T> {
-    public OneLineImageItemAdapter(Context context, List<T> items) {
-        super(context, items);
+    protected List<T> items;
+
+    public OneLineImageItemAdapter(List<T> items, OnListItemActionListener listener) {
+        super(items, listener);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        super.onBindViewHolder(holder, position);
+
+        ViewHolder thisHolder = (ViewHolder) holder;
+        T item = getItem(position);
+
+        String firstLineText = item.getFirstLine();
+        if (!TextUtils.isEmpty(firstLineText)) {
+            thisHolder.firstLine.setVisibility(View.VISIBLE);
+            thisHolder.firstLine.setText(firstLineText);
+        } else
+            thisHolder.firstLine.setVisibility(View.GONE);
+
+        int imageDrawableRes = item.getImageDrawableRes();
+        if (imageDrawableRes != 0) {
+            thisHolder.image.setVisibility(View.VISIBLE);
+            thisHolder.image.setImageResource(imageDrawableRes);
+        } else {
+            Drawable imageDrawable = item.getImageDrawable();
+            if (imageDrawable != null) {
+                thisHolder.image.setVisibility(View.VISIBLE);
+                thisHolder.image.setImageDrawable(imageDrawable);
+            } else {
+                Bitmap imageBitmap = item.getImageBitmap();
+                if (imageBitmap != null) {
+                    thisHolder.image.setVisibility(View.VISIBLE);
+                    thisHolder.image.setImageBitmap(imageBitmap);
+                } else {
+                    thisHolder.image.setVisibility(View.GONE);
+                }
+            }
+        }
     }
 
     @Override
@@ -28,54 +66,23 @@ public class OneLineImageItemAdapter<T extends OneLineImageItem> extends ListAda
         return R.layout.list_one_line_image_item;
     }
 
+    @NonNull
     @Override
-    protected void prepareViewHolder(View v) {
-        v.setTag(new ViewHolder(v));
-    }
-
-    @Override
-    protected void populateView(View v, int position) {
-        ViewHolder holder = (ViewHolder) v.getTag();
-        T item = getItem(position);
-
-        String firstLineText = item.getFirstLine();
-        if (!TextUtils.isEmpty(firstLineText)) {
-            holder.firstLine.setVisibility(View.VISIBLE);
-            holder.firstLine.setText(firstLineText);
-        } else
-            holder.firstLine.setVisibility(View.GONE);
-
-        int imageDrawableRes = item.getImageDrawableRes();
-        if (imageDrawableRes != 0) {
-            holder.image.setVisibility(View.VISIBLE);
-            holder.image.setImageResource(imageDrawableRes);
-        } else {
-            Drawable imageDrawable = item.getImageDrawable();
-            if (imageDrawable != null) {
-                holder.image.setVisibility(View.VISIBLE);
-                holder.image.setImageDrawable(imageDrawable);
-            } else {
-                Bitmap imageBitmap = item.getImageBitmap();
-                if (imageBitmap != null) {
-                    holder.image.setVisibility(View.VISIBLE);
-                    holder.image.setImageBitmap(imageBitmap);
-                } else {
-                    holder.image.setVisibility(View.GONE);
-                }
-            }
-        }
+    protected RecyclerView.ViewHolder createViewHolder(@NonNull View view) {
+        return new ViewHolder(view);
     }
 
     /**
      * This class represents the root view holder for {@link OneLineImageItem}s.
      */
-    protected static class ViewHolder {
+    protected static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView firstLine;
         public ImageView image;
 
-        public ViewHolder(View itemView) {
-            firstLine = itemView.findViewById(R.id.first_line);
-            image = itemView.findViewById(R.id.image);
+        public ViewHolder(View view) {
+            super(view);
+            firstLine = view.findViewById(R.id.first_line);
+            image = view.findViewById(R.id.image);
         }
     }
 }

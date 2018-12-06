@@ -1,55 +1,61 @@
 package at.haselwanter.android.lili.adapters;
 
-import android.content.Context;
-import androidx.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 
 import java.util.List;
+
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+import at.haselwanter.android.lili.models.OneLineImageItem;
 
 /**
  * A placeholder list adapter for several kinds of list items.
  * <p/>
  * Created by Stefan Haselwanter on 14.09.2017
  */
-public abstract class ListAdapter<T> extends BaseAdapter {
+public abstract class ListAdapter<T extends OneLineImageItem> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     protected List<T> items;
-    private LayoutInflater inflater;
+    private OnListItemActionListener listener;
 
-    protected ListAdapter(Context context, List<T> items) {
-        this.inflater = LayoutInflater.from(context);
+    protected ListAdapter(List<T> items, OnListItemActionListener listener) {
         this.items = items;
+        this.listener = listener;
+    }
+
+    @NonNull
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(getLayoutResource(), parent, false);
+        return createViewHolder(view);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View rowView = convertView;
-
-        if (rowView == null) {
-            rowView = inflater.inflate(getLayoutResource(), null);
-            prepareViewHolder(rowView);
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        // Register OnClickListeners.
+        if (listener != null) {
+            holder.itemView.setOnClickListener(v -> listener.onListItemSelected(position, getItem(position), v));
+            holder.itemView.setOnLongClickListener(v -> {
+                listener.onListItemLongPressed(position, getItem(position), v);
+                return true;
+            });
         }
-
-        populateView(rowView, position);
-
-        return rowView;
     }
 
     @Override
-    public int getCount() {
-        return items != null ? items.size() : 0;
-    }
-
-    @Override
-    public T getItem(int position) {
-        return items.get(position);
+    public int getItemCount() {
+        return items.size();
     }
 
     @Override
     public long getItemId(int position) {
         return position;
+    }
+
+    public T getItem(int position) {
+        return items.get(position);
     }
 
     /**
@@ -81,15 +87,22 @@ public abstract class ListAdapter<T> extends BaseAdapter {
     /**
      * Initializes the view holder with the given view.
      *
-     * @param v List item view.
+     * @param view List item view.
      */
-    protected abstract void prepareViewHolder(View v);
+    @NonNull
+    protected abstract RecyclerView.ViewHolder createViewHolder(@NonNull View view);
 
     /**
-     * Populates the view for the list item at the specific position.
-     *
-     * @param v        List item view.
-     * @param position List item position.
+     * A listener for performing actions on list items.
      */
-    protected abstract void populateView(View v, int position);
+    public interface OnListItemActionListener {
+        /**
+         * Callback method to be invoked when a list item is selected.
+         *
+         * @param item List item.
+         */
+        <T extends OneLineImageItem> void onListItemSelected(int position, T item, View view);
+
+        <T extends OneLineImageItem> void onListItemLongPressed(int position, T item, View view);
+    }
 }

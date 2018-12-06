@@ -18,7 +18,7 @@ public class TwoItemFragment extends ListFragment<TwoLineDummy, TwoLineDummyMode
 
     @Override
     protected ListAdapter<TwoLineDummy> getAdapter() {
-        return new TwoLineImageItemAdapter<>(getContext(), list);
+        return new TwoLineImageItemAdapter<>(list, listener);
     }
 
     @Override

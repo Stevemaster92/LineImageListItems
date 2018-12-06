@@ -1,12 +1,13 @@
 package at.haselwanter.android.lili.adapters;
 
-import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import at.haselwanter.android.lili.R;
 import at.haselwanter.android.lili.models.ThreeLineImageItem;
 
@@ -16,8 +17,23 @@ import at.haselwanter.android.lili.models.ThreeLineImageItem;
  * Created by Stefan Haselwanter on 14.09.2017.
  */
 public class ThreeLineImageItemAdapter<T extends ThreeLineImageItem> extends TwoLineImageItemAdapter<T> {
-    public ThreeLineImageItemAdapter(Context context, List<T> items) {
-        super(context, items);
+    public ThreeLineImageItemAdapter(List<T> items, OnListItemActionListener listener) {
+        super(items, listener);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        super.onBindViewHolder(holder, position);
+
+        ViewHolder thisHolder = (ViewHolder) holder;
+        T item = getItem(position);
+
+        String thirdLineText = item.getThirdLine();
+        if (!TextUtils.isEmpty(thirdLineText)) {
+            thisHolder.thirdLine.setVisibility(View.VISIBLE);
+            thisHolder.thirdLine.setText(thirdLineText);
+        } else
+            thisHolder.thirdLine.setVisibility(View.GONE);
     }
 
     @Override
@@ -25,24 +41,10 @@ public class ThreeLineImageItemAdapter<T extends ThreeLineImageItem> extends Two
         return R.layout.list_three_line_image_item;
     }
 
+    @NonNull
     @Override
-    protected void prepareViewHolder(View v) {
-        v.setTag(new ViewHolder(v));
-    }
-
-    @Override
-    protected void populateView(View v, int position) {
-        super.populateView(v, position);
-
-        ViewHolder holder = (ViewHolder) v.getTag();
-        T item = getItem(position);
-
-        String thirdLineText = item.getThirdLine();
-        if (!TextUtils.isEmpty(thirdLineText)) {
-            holder.thirdLine.setVisibility(View.VISIBLE);
-            holder.thirdLine.setText(thirdLineText);
-        } else
-            holder.thirdLine.setVisibility(View.GONE);
+    protected RecyclerView.ViewHolder createViewHolder(@NonNull View view) {
+        return new ViewHolder(view);
     }
 
     /**

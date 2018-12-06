@@ -18,7 +18,7 @@ public class ThreeItemFragment extends ListFragment<ThreeLineDummy, ThreeLineDum
 
     @Override
     protected ListAdapter<ThreeLineDummy> getAdapter() {
-        return new ThreeLineImageItemAdapter<>(getContext(), list);
+        return new ThreeLineImageItemAdapter<>(list, listener);
     }
 
     @Override

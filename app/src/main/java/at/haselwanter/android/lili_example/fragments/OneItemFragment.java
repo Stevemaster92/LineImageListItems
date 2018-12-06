@@ -18,7 +18,7 @@ public class OneItemFragment extends ListFragment<OneLineDummy, OneLineDummyMode
 
     @Override
     protected ListAdapter<OneLineDummy> getAdapter() {
-        return new OneLineImageItemAdapter<>(getContext(), list);
+        return new OneLineImageItemAdapter<>(list, listener);
     }
 
     @Override

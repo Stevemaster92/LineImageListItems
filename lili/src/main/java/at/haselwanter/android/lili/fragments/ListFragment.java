@@ -4,15 +4,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import at.haselwanter.android.lili.R;
 import at.haselwanter.android.lili.adapters.ListAdapter;
@@ -25,12 +24,14 @@ import at.haselwanter.android.lili.models.OneLineImageItem;
  * <p/>
  * Created by Stefan Haselwanter on 10.10.2018
  */
-public abstract class ListFragment<T extends OneLineImageItem, M extends BaseViewModel<T>> extends BaseFragment<M> implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+public abstract class ListFragment<T extends OneLineImageItem, M extends BaseViewModel<T>>
+        extends BaseFragment<M> {
     protected List<T> list;
     protected ListAdapter<T> adapter;
-    protected ListView listView;
+    protected RecyclerView listView;
+    protected RecyclerView.LayoutManager layoutManager;
     protected SwipeRefreshLayout swipeRefreshLayout;
-    protected OnListItemActionListener listener;
+    protected ListAdapter.OnListItemActionListener listener;
 
     protected ListFragment() {
         list = new ArrayList<>();
@@ -42,7 +43,7 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
         // Verify that the host activity implements the callback interface.
         try {
             // Instantiate the listener so we can send events to the host.
-            listener = (OnListItemActionListener) context;
+            listener = (ListAdapter.OnListItemActionListener) context;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception.
             throw new ClassCastException(context.toString()
@@ -55,24 +56,6 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
         super.onActivityCreated(savedInstanceState);
         observeData();
         observeError();
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (position >= list.size() || listener == null)
-            return;
-
-        listener.onListItemSelected(position, adapter.getItem(position), view);
-    }
-
-    @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        if (position >= list.size() || listener == null)
-            return false;
-
-        listener.onListItemLongPressed(position, adapter.getItem(position), view);
-
-        return true;
     }
 
     /**
@@ -101,8 +84,11 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
     @Override
     protected void setupViews() {
         listView = view.findViewById(R.id.list);
-        listView.setOnItemClickListener(this);
-        listView.setOnItemLongClickListener(this);
+        // Set to 'true' to improve performance if changes in content do not change layout size of RecyclerView.
+        listView.setHasFixedSize(true);
+
+        layoutManager = new LinearLayoutManager(getActivity());
+        listView.setLayoutManager(layoutManager);
 
         adapter = getAdapter();
         listView.setAdapter(adapter);
@@ -183,18 +169,4 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
      * @return The list adapter.
      */
     protected abstract ListAdapter<T> getAdapter();
-
-    /**
-     * A listener for performing actions on list items.
-     */
-    public interface OnListItemActionListener {
-        /**
-         * Callback method to be invoked when a list item is selected.
-         *
-         * @param item List item.
-         */
-        <T extends OneLineImageItem> void onListItemSelected(int position, T item, View view);
-
-        <T extends OneLineImageItem> void onListItemLongPressed(int position, T item, View view);
-    }
 }

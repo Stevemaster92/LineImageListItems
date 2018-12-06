@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+import at.haselwanter.android.lili.adapters.ListAdapter;
 import at.haselwanter.android.lili.fragments.ListFragment;
 import at.haselwanter.android.lili.fragments.TagFragment;
 import at.haselwanter.android.lili.models.OneLineImageItem;
@@ -16,7 +17,7 @@ import at.haselwanter.android.lili_example.fragments.OneItemFragment;
 import at.haselwanter.android.lili_example.fragments.ThreeItemFragment;
 import at.haselwanter.android.lili_example.fragments.TwoItemFragment;
 
-public class ListActivity extends AppCompatActivity implements ListFragment.OnListItemActionListener {
+public class ListActivity extends AppCompatActivity implements ListAdapter.OnListItemActionListener {
     public static final int NUMBER_OF_ITEMS = 10;
     private ListFragment listFragment;
 
@@ -26,7 +27,6 @@ public class ListActivity extends AppCompatActivity implements ListFragment.OnLi
         setContentView(R.layout.activity_list);
 
         listFragment = chooseFragment(getIntent().getIntExtra(MainActivity.TAG_LIST_INDEX, -1));
-        listFragment.setOnListItemActionListener(this);
         showFragment(listFragment);
     }
 
