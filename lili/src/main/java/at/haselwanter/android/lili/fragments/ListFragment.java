@@ -99,14 +99,14 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
 
     protected void observeData() {
         setRefreshing(true);
-        model.getData().observe(getActivity(), items -> {
+        model.getData().observe(requireActivity(), items -> {
             updateList(items);
             setRefreshing(false);
         });
     }
 
     protected void observeError() {
-        model.getError().observe(getActivity(), error -> {
+        model.getError().observe(requireActivity(), error -> {
             Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
             setRefreshing(false);
         });
