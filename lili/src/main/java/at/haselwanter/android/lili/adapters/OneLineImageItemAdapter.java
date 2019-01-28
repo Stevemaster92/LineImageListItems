@@ -20,8 +20,6 @@ import at.haselwanter.android.lili.models.OneLineImageItem;
  * Created by Stefan Haselwanter on 14.09.2017.
  */
 public class OneLineImageItemAdapter<T extends OneLineImageItem> extends ListAdapter<T> {
-    protected List<T> items;
-
     public OneLineImageItemAdapter(List<T> items, OnListItemActionListener listener) {
         super(items, listener);
     }
