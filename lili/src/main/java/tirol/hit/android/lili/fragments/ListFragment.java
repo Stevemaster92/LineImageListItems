@@ -46,7 +46,9 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
      * @param refreshing Whether or not the view should show refresh progress.
      */
     protected void setRefreshing(final boolean refreshing) {
-        new Handler(Looper.getMainLooper()).post(() -> swipeRefreshLayout.setRefreshing(refreshing));
+        if (swipeRefreshLayout != null) {
+            new Handler(Looper.getMainLooper()).post(() -> swipeRefreshLayout.setRefreshing(refreshing));
+        }
     }
 
     /**
@@ -63,7 +65,7 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
     /**
      * Loads more data.
      *
-     * @param args The optional arguments passed to the view model.
+     * @param args The optional arguments passed to the underlying view model.
      */
     protected void loadMoreData(Object... args) {
         setRefreshing(true);
@@ -88,13 +90,15 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
         recyclerView.setAdapter(adapter);
 
         swipeRefreshLayout = view.findViewById(R.id.root);
-        swipeRefreshLayout.setOnRefreshListener(this::refreshList);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setOnRefreshListener(this::refreshList);
+        }
     }
 
     protected void observeData() {
         setRefreshing(true);
         model.getData().observe(getViewLifecycleOwner(), items -> {
-            updateList(items);
+            update(items);
             setRefreshing(false);
         });
     }
@@ -111,7 +115,7 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
      *
      * @param nextItems The list of items to add next.
      */
-    protected void updateList(List<T> nextItems) {
+    protected void update(List<T> nextItems) {
         list.clear();
         list.addAll(nextItems);
         notifyAdapter();
@@ -123,7 +127,7 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
      * @param index     The list index to start adding next items.
      * @param nextItems The list of items to add next.
      */
-    protected void updateList(int index, List<T> nextItems) {
+    protected void update(int index, List<T> nextItems) {
         list.addAll(index, nextItems);
         notifyAdapter();
     }
