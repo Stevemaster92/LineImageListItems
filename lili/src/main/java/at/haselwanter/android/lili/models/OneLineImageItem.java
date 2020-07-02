@@ -57,11 +57,13 @@ public abstract class OneLineImageItem implements Comparable<OneLineImageItem> {
 
     @Override
     public int compareTo(@NonNull OneLineImageItem o) {
-        return Long.valueOf(id).compareTo(o.id);
+        return Long.compare(id, o.id);
     }
 
+    @NonNull
     @Override
     public String toString() {
-        return "OneLineImageItem (" + id + ")";
+        return getClass().getSimpleName() + "#" + id;
     }
 }
+

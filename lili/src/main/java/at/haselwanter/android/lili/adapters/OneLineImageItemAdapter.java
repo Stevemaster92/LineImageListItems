@@ -35,8 +35,9 @@ public class OneLineImageItemAdapter<T extends OneLineImageItem> extends ListAda
         if (!TextUtils.isEmpty(firstLineText)) {
             thisHolder.firstLine.setVisibility(View.VISIBLE);
             thisHolder.firstLine.setText(firstLineText);
-        } else
+        } else {
             thisHolder.firstLine.setVisibility(View.GONE);
+        }
 
         int imageDrawableRes = item.getImageDrawableRes();
         if (imageDrawableRes != 0) {
@@ -61,7 +62,7 @@ public class OneLineImageItemAdapter<T extends OneLineImageItem> extends ListAda
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.list_one_line_image_item;
+        return R.layout.one_line_image_item;
     }
 
     @NonNull
@@ -79,7 +80,7 @@ public class OneLineImageItemAdapter<T extends OneLineImageItem> extends ListAda
 
         public ViewHolder(View view) {
             super(view);
-            firstLine = view.findViewById(R.id.first_line);
+            firstLine = view.findViewById(R.id.firstLine);
             image = view.findViewById(R.id.image);
         }
     }

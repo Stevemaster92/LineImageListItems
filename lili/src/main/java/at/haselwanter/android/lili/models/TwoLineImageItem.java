@@ -3,6 +3,7 @@ package at.haselwanter.android.lili.models;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 
 /**
  * A list item containing two lines of text and one image.
@@ -29,10 +30,5 @@ public abstract class TwoLineImageItem extends OneLineImageItem {
 
     public String getSecondLine() {
         return secondLine;
-    }
-
-    @Override
-    public String toString() {
-        return "TwoLineImageItem (" + id + ")";
     }
 }

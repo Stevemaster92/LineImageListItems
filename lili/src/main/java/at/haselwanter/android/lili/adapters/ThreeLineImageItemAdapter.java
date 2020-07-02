@@ -4,10 +4,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
+
 import at.haselwanter.android.lili.R;
 import at.haselwanter.android.lili.models.ThreeLineImageItem;
 
@@ -32,13 +33,14 @@ public class ThreeLineImageItemAdapter<T extends ThreeLineImageItem> extends Two
         if (!TextUtils.isEmpty(thirdLineText)) {
             thisHolder.thirdLine.setVisibility(View.VISIBLE);
             thisHolder.thirdLine.setText(thirdLineText);
-        } else
+        } else {
             thisHolder.thirdLine.setVisibility(View.GONE);
+        }
     }
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.list_three_line_image_item;
+        return R.layout.three_line_image_item;
     }
 
     @NonNull
@@ -55,7 +57,7 @@ public class ThreeLineImageItemAdapter<T extends ThreeLineImageItem> extends Two
 
         public ViewHolder(View itemView) {
             super(itemView);
-            thirdLine = itemView.findViewById(R.id.third_line);
+            thirdLine = itemView.findViewById(R.id.thirdLine);
         }
     }
 }

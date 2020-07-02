@@ -4,10 +4,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
+
 import at.haselwanter.android.lili.R;
 import at.haselwanter.android.lili.models.TwoLineImageItem;
 
@@ -32,13 +33,14 @@ public class TwoLineImageItemAdapter<T extends TwoLineImageItem> extends OneLine
         if (!TextUtils.isEmpty(secondLineText)) {
             thisHolder.secondLine.setVisibility(View.VISIBLE);
             thisHolder.secondLine.setText(secondLineText);
-        } else
+        } else {
             thisHolder.secondLine.setVisibility(View.GONE);
+        }
     }
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.list_two_line_image_item;
+        return R.layout.two_line_image_item;
     }
 
     @NonNull
@@ -55,7 +57,7 @@ public class TwoLineImageItemAdapter<T extends TwoLineImageItem> extends OneLine
 
         public ViewHolder(View itemView) {
             super(itemView);
-            secondLine = itemView.findViewById(R.id.second_line);
+            secondLine = itemView.findViewById(R.id.secondLine);
         }
     }
 }

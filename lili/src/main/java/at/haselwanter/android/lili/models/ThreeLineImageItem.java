@@ -2,6 +2,7 @@ package at.haselwanter.android.lili.models;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+
 import androidx.annotation.DrawableRes;
 
 /**
@@ -29,10 +30,5 @@ public abstract class ThreeLineImageItem extends TwoLineImageItem {
 
     public String getThirdLine() {
         return thirdLine;
-    }
-
-    @Override
-    public String toString() {
-        return "ThreeLineImageItem (" + id + ")";
     }
 }

@@ -4,11 +4,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
+
 import at.haselwanter.android.lili.models.OneLineImageItem;
 
 /**
@@ -36,9 +37,10 @@ public abstract class ListAdapter<T extends OneLineImageItem> extends RecyclerVi
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         // Register OnClickListeners.
         if (listener != null) {
-            holder.itemView.setOnClickListener(v -> listener.onListItemSelected(position, getItem(position), v));
+            T item = getItem(position);
+            holder.itemView.setOnClickListener(v -> listener.onListItemSelected(position, item, v));
             holder.itemView.setOnLongClickListener(v -> {
-                listener.onListItemLongPressed(position, getItem(position), v);
+                listener.onListItemLongPressed(position, item, v);
                 return true;
             });
         }
@@ -99,7 +101,9 @@ public abstract class ListAdapter<T extends OneLineImageItem> extends RecyclerVi
         /**
          * Callback method to be invoked when a list item is selected.
          *
-         * @param item List item.
+         * @param position The selected position in the list.
+         * @param item     The selected list item.
+         * @param view     The view of the selected list item.
          */
         <T extends OneLineImageItem> void onListItemSelected(int position, T item, View view);
 

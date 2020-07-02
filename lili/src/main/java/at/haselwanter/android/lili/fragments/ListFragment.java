@@ -1,18 +1,18 @@
 package at.haselwanter.android.lili.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import at.haselwanter.android.lili.R;
 import at.haselwanter.android.lili.adapters.ListAdapter;
 import at.haselwanter.android.lili.models.BaseViewModel;
@@ -25,31 +25,12 @@ import at.haselwanter.android.lili.models.OneLineImageItem;
  * Created by Stefan Haselwanter on 10.10.2018
  */
 public abstract class ListFragment<T extends OneLineImageItem, M extends BaseViewModel<T>>
-        extends BaseFragment<M> {
-    protected List<T> list;
+        extends BaseModelFragment<M> implements ListAdapter.OnListItemActionListener {
+    protected List<T> list = new ArrayList<>();
     protected ListAdapter<T> adapter;
     protected RecyclerView listView;
     protected RecyclerView.LayoutManager layoutManager;
     protected SwipeRefreshLayout swipeRefreshLayout;
-    protected ListAdapter.OnListItemActionListener listener;
-
-    protected ListFragment() {
-        list = new ArrayList<>();
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        // Verify that the host activity implements the callback interface.
-        try {
-            // Instantiate the listener so we can send events to the host.
-            listener = (ListAdapter.OnListItemActionListener) context;
-        } catch (ClassCastException e) {
-            // The activity doesn't implement the interface, throw exception.
-            throw new ClassCastException(context.toString()
-                    + " must implement OnListItemActionListener");
-        }
-    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -64,16 +45,29 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
      *
      * @param refreshing Whether or not the view should show refresh progress.
      */
-    public void setRefreshing(final boolean refreshing) {
+    protected void setRefreshing(final boolean refreshing) {
         new Handler(Looper.getMainLooper()).post(() -> swipeRefreshLayout.setRefreshing(refreshing));
     }
 
     /**
-     * Refreshes the list and reloads data.
+     * Refreshes the list and reloads the data.
+     *
+     * @param args The optional arguments passed to the view model.
      */
-    public void refreshList(Object... args) {
+    protected void refreshList(Object... args) {
         adapter.clear();
+        setRefreshing(true);
         model.refreshData(args);
+    }
+
+    /**
+     * Loads more data.
+     *
+     * @param args The optional arguments passed to the view model.
+     */
+    protected void loadMoreData(Object... args) {
+        setRefreshing(true);
+        model.loadDataAsync(args);
     }
 
     @Override
@@ -87,7 +81,7 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
         // Set to 'true' to improve performance if changes in content do not change layout size of RecyclerView.
         listView.setHasFixedSize(true);
 
-        layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager = new LinearLayoutManager(requireActivity());
         listView.setLayoutManager(layoutManager);
 
         adapter = getAdapter();
@@ -99,15 +93,15 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
 
     protected void observeData() {
         setRefreshing(true);
-        model.getData().observe(requireActivity(), items -> {
+        model.getData().observe(getViewLifecycleOwner(), items -> {
             updateList(items);
             setRefreshing(false);
         });
     }
 
     protected void observeError() {
-        model.getError().observe(requireActivity(), error -> {
-            Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+        model.getError().observe(getViewLifecycleOwner(), error -> {
+            Toast.makeText(requireContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
             setRefreshing(false);
         });
     }
@@ -159,8 +153,9 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
      * Notifies the list adapter that the data set has changed.
      */
     protected void notifyAdapter() {
-        if (adapter != null)
+        if (adapter != null) {
             adapter.notifyDataSetChanged();
+        }
     }
 
     /**

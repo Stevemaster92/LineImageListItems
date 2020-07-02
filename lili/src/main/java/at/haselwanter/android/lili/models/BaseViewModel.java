@@ -2,25 +2,22 @@ package at.haselwanter.android.lili.models;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Looper;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class BaseViewModel<T> extends AndroidViewModel {
     protected MutableLiveData<List<T>> data;
     protected MutableLiveData<DataError> error;
-    protected Context context;
 
     public BaseViewModel(@NonNull Application application) {
         super(application);
-        context = application.getApplicationContext();
     }
 
     public MutableLiveData<List<T>> getData(Object... args) {
@@ -41,13 +38,6 @@ public abstract class BaseViewModel<T> extends AndroidViewModel {
         return error;
     }
 
-    protected void setError(int code, String message) {
-        if (Thread.currentThread().equals(Looper.getMainLooper().getThread()))
-            error.setValue(new DataError(code, message));
-        else
-            error.postValue(new DataError(code, message));
-    }
-
     @SuppressLint("StaticFieldLeak")
     public void loadDataAsync(Object... args) {
         new AsyncTask<Object, Void, List<T>>() {
@@ -55,25 +45,29 @@ public abstract class BaseViewModel<T> extends AndroidViewModel {
             protected List<T> doInBackground(Object... params) {
                 List<T> data = onDataLoading(params);
 
-                if (data == null || data.isEmpty() || isCancelled())
+                if (data == null || data.isEmpty() || isCancelled()) {
                     onNoDataLoaded();
-
-                onDataPreparing(data);
+                } else {
+                    onDataLoaded(data);
+                }
 
                 return data;
             }
 
             @Override
             protected void onPostExecute(List<T> data) {
-                if (data == null || data.isEmpty() || isCancelled())
+                if (data == null || data.isEmpty() || isCancelled()) {
                     return;
+                }
 
                 List<T> list = BaseViewModel.this.data.getValue();
                 if (list != null && !list.isEmpty()) {
+                    // Append the new data if the list is not empty.
                     List<T> cloned = new ArrayList<>(list);
                     cloned.addAll(data);
                     BaseViewModel.this.data.setValue(cloned);
                 } else {
+                    // Otherwise, assign the new data to the list.
                     BaseViewModel.this.data.setValue(data);
                 }
             }
@@ -87,12 +81,19 @@ public abstract class BaseViewModel<T> extends AndroidViewModel {
         }
     }
 
+    protected void setError(int code, String message) {
+        if (Thread.currentThread().equals(Looper.getMainLooper().getThread()))
+            error.setValue(new DataError(code, message));
+        else
+            error.postValue(new DataError(code, message));
+    }
+
     protected abstract List<T> onDataLoading(Object... args);
+
+    protected void onDataLoaded(List<T> data) {
+    }
 
     protected void onNoDataLoaded() {
         setError(404, "No data loaded");
-    }
-
-    protected void onDataPreparing(List<T> data) {
     }
 }
