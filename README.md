@@ -7,11 +7,11 @@
 # LineImageListItems (LILI)
 [LineImageListItems](https://github.com/Stevemaster92/LineImageListItems) is an easy-to-use library which provides default list items, adapters, and list fragments fitting daily Android development when working with lists.
 It employs the following Android components and patterns:
-    
-    * [RecyclerView](https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView) for flexible list views and layouts.
-    * [ViewHolder](https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView.ViewHolder) for easy data-view binding.
-    * [SwipeRefreshLayout](https://developer.android.com/reference/androidx/swiperefreshlayout/widget/SwipeRefreshLayout) for gesture-based data refreshing.
-    * [ViewModel](https://developer.android.com/reference/androidx/lifecycle/ViewModel) and [LiveData](https://developer.android.com/reference/androidx/lifecycle/LiveData) for lifecycle-aware background data loading.
+
+- [RecyclerView](https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView) for flexible list views and layouts.
+- [ViewHolder](https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView.ViewHolder) for easy data-view binding.
+- [SwipeRefreshLayout](https://developer.android.com/reference/androidx/swiperefreshlayout/widget/SwipeRefreshLayout) for gesture-based data refreshing.
+- [ViewModel](https://developer.android.com/reference/androidx/lifecycle/ViewModel) and [LiveData](https://developer.android.com/reference/androidx/lifecycle/LiveData) for lifecycle-aware background data loading.
     
 The library includes pre-defined layouts for the different list items which can be adjusted to personal needs.
 Furthermore, one can easily extend the basic functions of the provided models, adapters, and fragments by creating sub classes of each component.
