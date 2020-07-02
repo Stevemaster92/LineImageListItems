@@ -12,4 +12,7 @@
     <string name="three_one_item_fragment">3-Line 1-Line</string>
     <string name="three_two_item_fragment">3-Line 2-Line</string>
     <string name="three_three_item_child_fragment">3-Line 3-Line</string>
+    <string name="refresh">Refresh</string>
+    <string name="help">Help</string>
+    <string name="add_items">Add Items</string>
 </resources>

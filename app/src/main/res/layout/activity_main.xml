@@ -1,87 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="at.haselwanter.android.lili_example.MainActivity">
+    tools:context="tirol.hit.android.lili.example.MainActivity">
 
-    <LinearLayout
-        android:id="@+id/button_menu"
-        android:layout_width="match_parent"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="?android:attr/windowBackground"
+        app:labelVisibilityMode="selected"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:layout_margin="@dimen/horizontal_margin_small"
-            android:text="@string/one_item_fragment"/>
+    <fragment
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@+id/nav_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/bottom_navigation" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:layout_margin="@dimen/horizontal_margin_small"
-            android:text="@string/two_item_fragment"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:layout_margin="@dimen/horizontal_margin_small"
-            android:text="@string/three_item_fragment"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:layout_margin="@dimen/horizontal_margin_small"
-            android:text="@string/one_one_item_fragment"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:layout_margin="@dimen/horizontal_margin_small"
-            android:text="@string/one_two_item_fragment"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:layout_margin="@dimen/horizontal_margin_small"
-            android:text="@string/one_three_item_fragment"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:layout_margin="@dimen/horizontal_margin_small"
-            android:text="@string/two_one_item_fragment"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:layout_margin="@dimen/horizontal_margin_small"
-            android:text="@string/two_two_item_fragment"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:layout_margin="@dimen/horizontal_margin_small"
-            android:text="@string/two_three_item_fragment"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:layout_margin="@dimen/horizontal_margin_small"
-            android:text="@string/three_one_item_fragment"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:layout_margin="@dimen/horizontal_margin_small"
-            android:text="@string/three_two_item_fragment"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:layout_margin="@dimen/horizontal_margin_small"
-            android:text="@string/three_three_item_child_fragment"/>
-    </LinearLayout>
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
