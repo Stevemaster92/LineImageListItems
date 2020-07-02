@@ -7,16 +7,16 @@
 
     <fragment
         android:id="@+id/nav_one"
-        android:name="at.haselwanter.android.lili_example.fragments.OneLineFragment"
+        android:name="tirol.hit.android.lili.example.fragments.OneLineFragment"
         tools:layout="@layout/list" />
 
     <fragment
         android:id="@+id/nav_two"
-        android:name="at.haselwanter.android.lili_example.fragments.TwoLineFragment"
+        android:name="tirol.hit.android.lili.example.fragments.TwoLineFragment"
         tools:layout="@layout/list" />
 
     <fragment
         android:id="@+id/nav_three"
-        android:name="at.haselwanter.android.lili_example.fragments.ThreeLineFragment"
+        android:name="tirol.hit.android.lili.example.fragments.ThreeLineFragment"
         tools:layout="@layout/list" />
 </navigation>
