@@ -5,9 +5,18 @@ import java.util.List;
 import tirol.hit.android.lili.R;
 import tirol.hit.android.lili.models.ThreeLineImageItem;
 
+/**
+ * A list adapter for {@link ThreeLineImageItem}s.
+ * <p/>
+ * Created by Stefan Haselwanter on 02.07.2020.
+ */
 public class ThreeLineCardItemAdapter<T extends ThreeLineImageItem> extends ThreeLineImageItemAdapter<T> {
-    public ThreeLineCardItemAdapter(List<T> items, OnListItemActionListener listener) {
-        super(items, listener);
+    public ThreeLineCardItemAdapter() {
+        super();
+    }
+
+    public ThreeLineCardItemAdapter(List<T> items) {
+        super(items);
     }
 
     @Override

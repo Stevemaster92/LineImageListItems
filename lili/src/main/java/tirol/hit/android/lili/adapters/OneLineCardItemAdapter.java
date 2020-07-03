@@ -5,9 +5,18 @@ import java.util.List;
 import tirol.hit.android.lili.R;
 import tirol.hit.android.lili.models.OneLineImageItem;
 
+/**
+ * A list adapter for {@link OneLineImageItem}s.
+ * <p/>
+ * Created by Stefan Haselwanter on 02.07.2020.
+ */
 public class OneLineCardItemAdapter<T extends OneLineImageItem> extends OneLineImageItemAdapter<T> {
-    public OneLineCardItemAdapter(List<T> items, OnListItemActionListener listener) {
-        super(items, listener);
+    public OneLineCardItemAdapter() {
+        super();
+    }
+
+    public OneLineCardItemAdapter(List<T> items) {
+        super(items);
     }
 
     @Override

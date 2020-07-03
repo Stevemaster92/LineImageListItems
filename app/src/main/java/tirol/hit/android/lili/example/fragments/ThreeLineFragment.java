@@ -18,7 +18,7 @@ public class ThreeLineFragment extends BaseListFragment<ThreeLineDummy, ThreeLin
 
     @Override
     protected ListAdapter<ThreeLineDummy> getAdapter() {
-        return new ThreeLineCardItemAdapter<>(list, this);
+        return new ThreeLineCardItemAdapter<>();
     }
 
     @Override

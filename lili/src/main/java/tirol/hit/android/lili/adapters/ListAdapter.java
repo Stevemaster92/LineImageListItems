@@ -22,9 +22,8 @@ public abstract class ListAdapter<T extends OneLineImageItem> extends RecyclerVi
     protected List<T> items;
     private OnListItemActionListener listener;
 
-    protected ListAdapter(List<T> items, OnListItemActionListener listener) {
+    protected ListAdapter(List<T> items) {
         this.items = items;
-        this.listener = listener;
     }
 
     @NonNull
@@ -59,6 +58,14 @@ public abstract class ListAdapter<T extends OneLineImageItem> extends RecyclerVi
 
     public T getItem(int position) {
         return items.get(position);
+    }
+
+    public void setItems(List<T> items) {
+        this.items = items;
+    }
+
+    public void setListener(OnListItemActionListener listener) {
+        this.listener = listener;
     }
 
     /**

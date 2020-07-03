@@ -40,10 +40,10 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
     }
 
     /**
-     * Notify the widget that refresh state has changed. Do not call this when
+     * Notifies the widget that the refresh state has changed. Do not call this method when
      * refresh is triggered by a swipe gesture.
      *
-     * @param refreshing Whether or not the view should show refresh progress.
+     * @param refreshing Whether or not the view should show the refresh progress.
      */
     protected void setRefreshing(final boolean refreshing) {
         if (swipeRefreshLayout != null) {
@@ -56,7 +56,7 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
      *
      * @param args The optional arguments passed to the view model.
      */
-    protected void refreshList(Object... args) {
+    protected void refreshData(Object... args) {
         adapter.clear();
         setRefreshing(true);
         model.refreshData(args);
@@ -80,25 +80,27 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
     @Override
     protected void setupViews() {
         recyclerView = view.findViewById(R.id.list);
-        // Set to 'true' to improve performance if changes in content do not change layout size of RecyclerView.
-        recyclerView.setHasFixedSize(true);
-
+        // Setup layout manager.
         layoutManager = new LinearLayoutManager(requireActivity());
         recyclerView.setLayoutManager(layoutManager);
-
+        // Improve the performance if changes in the content do not affect the layout size of the recycler view.
+        recyclerView.setHasFixedSize(true);
+        // Setup adapter.
         adapter = getAdapter();
+        adapter.setItems(list);
+        adapter.setListener(this);
         recyclerView.setAdapter(adapter);
-
+        // Setup swipe refresh layout.
         swipeRefreshLayout = view.findViewById(R.id.root);
         if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.setOnRefreshListener(this::refreshList);
+            swipeRefreshLayout.setOnRefreshListener(this::refreshData);
         }
     }
 
     protected void observeData() {
         setRefreshing(true);
         model.getData().observe(getViewLifecycleOwner(), items -> {
-            update(items);
+            addAll(items);
             setRefreshing(false);
         });
     }
@@ -108,28 +110,6 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
             Toast.makeText(requireContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
             setRefreshing(false);
         });
-    }
-
-    /**
-     * Updates the current list by appending the list of next items.
-     *
-     * @param nextItems The list of items to add next.
-     */
-    protected void update(List<T> nextItems) {
-        list.clear();
-        list.addAll(nextItems);
-        notifyAdapter();
-    }
-
-    /**
-     * Updates the current list by adding the list of next items at the specific index.
-     *
-     * @param index     The list index to start adding next items.
-     * @param nextItems The list of items to add next.
-     */
-    protected void update(int index, List<T> nextItems) {
-        list.addAll(index, nextItems);
-        notifyAdapter();
     }
 
     /**
@@ -150,6 +130,28 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
      */
     protected void add(int index, T nextItem) {
         list.add(index, nextItem);
+        notifyAdapter();
+    }
+
+    /**
+     * Updates the current list by appending the list of next items.
+     *
+     * @param nextItems The list of items to add next.
+     */
+    protected void addAll(List<T> nextItems) {
+        list.clear();
+        list.addAll(nextItems);
+        notifyAdapter();
+    }
+
+    /**
+     * Updates the current list by adding the list of next items at the specific index.
+     *
+     * @param index     The list index to start adding next items.
+     * @param nextItems The list of items to add next.
+     */
+    protected void addAll(int index, List<T> nextItems) {
+        list.addAll(index, nextItems);
         notifyAdapter();
     }
 

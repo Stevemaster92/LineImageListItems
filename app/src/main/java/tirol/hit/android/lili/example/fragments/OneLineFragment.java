@@ -18,7 +18,7 @@ public class OneLineFragment extends BaseListFragment<OneLineDummy, OneLineDummy
 
     @Override
     protected ListAdapter<OneLineDummy> getAdapter() {
-        return new OneLineCardItemAdapter<>(list, this);
+        return new OneLineCardItemAdapter<>();
     }
 
     @Override

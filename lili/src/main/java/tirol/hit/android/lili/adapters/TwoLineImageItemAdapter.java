@@ -18,8 +18,12 @@ import tirol.hit.android.lili.models.TwoLineImageItem;
  * Created by Stefan Haselwanter on 14.09.2017.
  */
 public class TwoLineImageItemAdapter<T extends TwoLineImageItem> extends OneLineImageItemAdapter<T> {
-    public TwoLineImageItemAdapter(List<T> items, OnListItemActionListener listener) {
-        super(items, listener);
+    public TwoLineImageItemAdapter() {
+        super();
+    }
+
+    public TwoLineImageItemAdapter(List<T> items) {
+        super(items);
     }
 
     @Override

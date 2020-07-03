@@ -18,8 +18,12 @@ import tirol.hit.android.lili.models.ThreeLineImageItem;
  * Created by Stefan Haselwanter on 14.09.2017.
  */
 public class ThreeLineImageItemAdapter<T extends ThreeLineImageItem> extends TwoLineImageItemAdapter<T> {
-    public ThreeLineImageItemAdapter(List<T> items, OnListItemActionListener listener) {
-        super(items, listener);
+    public ThreeLineImageItemAdapter() {
+        super();
+    }
+
+    public ThreeLineImageItemAdapter(List<T> items) {
+        super(items);
     }
 
     @Override

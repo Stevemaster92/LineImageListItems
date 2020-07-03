@@ -17,7 +17,7 @@ public class TwoLineFragment extends BaseListFragment<TwoLineDummy, TwoLineDummy
 
     @Override
     protected ListAdapter<TwoLineDummy> getAdapter() {
-        return new TwoLineCardItemAdapter<>(list, this);
+        return new TwoLineCardItemAdapter<>();
     }
 
     @Override

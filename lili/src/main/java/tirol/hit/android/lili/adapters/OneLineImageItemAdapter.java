@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -20,8 +21,12 @@ import tirol.hit.android.lili.models.OneLineImageItem;
  * Created by Stefan Haselwanter on 14.09.2017.
  */
 public class OneLineImageItemAdapter<T extends OneLineImageItem> extends ListAdapter<T> {
-    public OneLineImageItemAdapter(List<T> items, OnListItemActionListener listener) {
-        super(items, listener);
+    public OneLineImageItemAdapter() {
+        this(new ArrayList<>());
+    }
+
+    public OneLineImageItemAdapter(List<T> items) {
+        super(items);
     }
 
     @Override
