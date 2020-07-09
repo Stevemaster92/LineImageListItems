@@ -16,4 +16,8 @@ public abstract class BaseModelFragment<M extends ViewModel> extends TagFragment
     }
 
     protected abstract Class<M> getModelClass();
+
+    protected abstract void observeData(Object... args);
+
+    protected abstract void observeError();
 }

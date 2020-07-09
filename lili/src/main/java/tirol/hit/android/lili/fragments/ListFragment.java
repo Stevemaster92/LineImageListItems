@@ -97,14 +97,16 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
         }
     }
 
-    protected void observeData() {
+    @Override
+    protected void observeData(Object... args) {
         setRefreshing(true);
-        model.getData().observe(getViewLifecycleOwner(), items -> {
+        model.getData(args).observe(getViewLifecycleOwner(), items -> {
             addAll(items);
             setRefreshing(false);
         });
     }
 
+    @Override
     protected void observeError() {
         model.getError().observe(getViewLifecycleOwner(), error -> {
             Toast.makeText(requireContext(), error.getMessage(), Toast.LENGTH_SHORT).show();

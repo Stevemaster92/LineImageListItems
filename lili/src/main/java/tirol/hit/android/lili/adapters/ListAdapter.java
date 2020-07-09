@@ -20,7 +20,7 @@ import tirol.hit.android.lili.models.OneLineImageItem;
  */
 public abstract class ListAdapter<T extends OneLineImageItem> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     protected List<T> items;
-    private OnListItemActionListener listener;
+    protected OnListItemActionListener listener;
 
     protected ListAdapter(List<T> items) {
         this.items = items;
