@@ -5,6 +5,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import tirol.hit.android.lili.example.R;
@@ -30,7 +31,7 @@ public abstract class BaseListFragment<T extends OneLineImageItem, M extends Bas
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.refresh:
                 refreshData();
@@ -44,12 +45,12 @@ public abstract class BaseListFragment<T extends OneLineImageItem, M extends Bas
     }
 
     @Override
-    public <S extends OneLineImageItem> void onListItemSelected(int position, S item, View view) {
+    public void onListItemSelected(int position, T item, View view) {
         Toast.makeText(requireActivity(), "Selected: " + item + " @ " + position, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public <S extends OneLineImageItem> void onListItemLongPressed(int position, S item, View view) {
+    public void onListItemLongPressed(int position, T item, View view) {
         Toast.makeText(requireActivity(), "Long Press: " + item + " @ " + position, Toast.LENGTH_SHORT).show();
     }
 }

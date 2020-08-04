@@ -20,7 +20,7 @@ import tirol.hit.android.lili.models.OneLineImageItem;
  */
 public abstract class ListAdapter<T extends OneLineImageItem> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     protected List<T> items;
-    protected OnListItemActionListener listener;
+    protected OnListItemActionListener<T> listener;
 
     protected ListAdapter(List<T> items) {
         this.items = items;
@@ -64,7 +64,7 @@ public abstract class ListAdapter<T extends OneLineImageItem> extends RecyclerVi
         this.items = items;
     }
 
-    public void setListener(OnListItemActionListener listener) {
+    public void setListener(OnListItemActionListener<T> listener) {
         this.listener = listener;
     }
 
@@ -105,7 +105,7 @@ public abstract class ListAdapter<T extends OneLineImageItem> extends RecyclerVi
     /**
      * A listener for performing actions on list items.
      */
-    public interface OnListItemActionListener {
+    public interface OnListItemActionListener<T> {
         /**
          * Callback method to be invoked when a list item is selected.
          *
@@ -113,8 +113,8 @@ public abstract class ListAdapter<T extends OneLineImageItem> extends RecyclerVi
          * @param item     The selected list item.
          * @param view     The view of the selected list item.
          */
-        <T extends OneLineImageItem> void onListItemSelected(int position, T item, View view);
+        void onListItemSelected(int position, T item, View view);
 
-        <T extends OneLineImageItem> void onListItemLongPressed(int position, T item, View view);
+        void onListItemLongPressed(int position, T item, View view);
     }
 }

@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,7 +26,7 @@ import tirol.hit.android.lili.models.OneLineImageItem;
  * Created by Stefan Haselwanter on 10.10.2018
  */
 public abstract class ListFragment<T extends OneLineImageItem, M extends BaseViewModel<T>>
-        extends BaseModelFragment<M> implements ListAdapter.OnListItemActionListener {
+        extends BaseModelFragment<M> implements ListAdapter.OnListItemActionListener<T> {
     protected List<T> list = new ArrayList<>();
     protected ListAdapter<T> adapter;
     protected RecyclerView recyclerView;
@@ -45,7 +46,7 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
      *
      * @param refreshing Whether or not the view should show the refresh progress.
      */
-    protected void setRefreshing(final boolean refreshing) {
+    protected void setRefreshing(boolean refreshing) {
         if (swipeRefreshLayout != null) {
             new Handler(Looper.getMainLooper()).post(() -> swipeRefreshLayout.setRefreshing(refreshing));
         }
@@ -171,5 +172,6 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
      *
      * @return The list adapter.
      */
+    @NonNull
     protected abstract ListAdapter<T> getAdapter();
 }

@@ -34,6 +34,7 @@ public abstract class TagFragment extends Fragment {
      *
      * @return This fragment's tag.
      */
+    @NonNull
     public abstract String getFragmentTag();
 
     /**
