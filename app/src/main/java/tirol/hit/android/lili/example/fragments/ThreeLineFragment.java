@@ -12,6 +12,10 @@ import tirol.hit.android.lili.example.models.view.ThreeLineDummyModel;
  * Created by Stefan Haselwanter on 14.09.2017.
  */
 public class ThreeLineFragment extends BaseListFragment<ThreeLineDummy, ThreeLineDummyModel> {
+    public ThreeLineFragment() {
+        super(ThreeLineDummyModel.class);
+    }
+
     @NonNull
     @Override
     public String getFragmentTag() {
@@ -22,10 +26,5 @@ public class ThreeLineFragment extends BaseListFragment<ThreeLineDummy, ThreeLin
     @Override
     protected ListAdapter<ThreeLineDummy> getAdapter() {
         return new ThreeLineCardItemAdapter<>();
-    }
-
-    @Override
-    protected Class<ThreeLineDummyModel> getModelClass() {
-        return ThreeLineDummyModel.class;
     }
 }

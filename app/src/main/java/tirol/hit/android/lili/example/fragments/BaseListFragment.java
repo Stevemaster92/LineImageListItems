@@ -14,6 +14,10 @@ import tirol.hit.android.lili.models.BaseViewModel;
 import tirol.hit.android.lili.models.OneLineImageItem;
 
 public abstract class BaseListFragment<T extends OneLineImageItem, M extends BaseViewModel<T>> extends ListFragment<T, M> {
+    protected BaseListFragment(Class<M> modelClass) {
+        super(modelClass);
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,8 +25,8 @@ public abstract class BaseListFragment<T extends OneLineImageItem, M extends Bas
     }
 
     @Override
-    protected void setupViews() {
-        super.setupViews();
+    protected void setupViews(@Nullable Bundle savedInstanceState) {
+        super.setupViews(savedInstanceState);
         // Add horizontal divider for list items.
 //        recyclerView.addItemDecoration(new DividerItemDecoration(
 //                recyclerView.getContext(),

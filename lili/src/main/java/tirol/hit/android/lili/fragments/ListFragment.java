@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,6 +34,14 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
     protected RecyclerView.LayoutManager layoutManager;
     protected SwipeRefreshLayout swipeRefreshLayout;
 
+    protected ListFragment(Class<M> modelClass) {
+        this(R.layout.list, modelClass);
+    }
+
+    protected ListFragment(@LayoutRes int resId, Class<M> modelClass) {
+        super(resId, modelClass);
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -60,7 +69,7 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
     protected void refreshData(Object... args) {
         adapter.clear();
         setRefreshing(true);
-        model.refreshData(args);
+        getModel().refreshData(args);
     }
 
     /**
@@ -70,16 +79,11 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
      */
     protected void loadMoreData(Object... args) {
         setRefreshing(true);
-        model.loadDataAsync(args);
+        getModel().loadDataAsync(args);
     }
 
     @Override
-    protected int getLayoutResource() {
-        return R.layout.list;
-    }
-
-    @Override
-    protected void setupViews() {
+    protected void setupViews(@Nullable Bundle savedInstanceState) {
         recyclerView = view.findViewById(R.id.list);
         // Setup layout manager.
         layoutManager = new LinearLayoutManager(requireActivity());
@@ -101,7 +105,7 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
     @Override
     protected void observeData(Object... args) {
         setRefreshing(true);
-        model.getData(args).observe(getViewLifecycleOwner(), items -> {
+        getModel().getData(args).observe(getViewLifecycleOwner(), items -> {
             addAll(items);
             setRefreshing(false);
         });
@@ -109,7 +113,7 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
 
     @Override
     protected void observeError() {
-        model.getError().observe(getViewLifecycleOwner(), error -> {
+        getModel().getError().observe(getViewLifecycleOwner(), error -> {
             Toast.makeText(requireContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
             setRefreshing(false);
         });

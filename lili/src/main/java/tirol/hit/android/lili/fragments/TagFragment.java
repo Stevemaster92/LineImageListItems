@@ -18,12 +18,16 @@ import androidx.fragment.app.Fragment;
 public abstract class TagFragment extends Fragment {
     protected View view;
 
+    protected TagFragment(@LayoutRes int resId) {
+        super(resId);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (view == null) {
-            view = inflater.inflate(getLayoutResource(), container, false);
-            setupViews();
+            view = super.onCreateView(inflater, container, savedInstanceState);
+            setupViews(savedInstanceState);
         }
 
         return view;
@@ -38,15 +42,9 @@ public abstract class TagFragment extends Fragment {
     public abstract String getFragmentTag();
 
     /**
-     * Returns the current layout resource.
+     * Initializes all the views.
      *
-     * @return The layout resource.
+     * @param savedInstanceState The previously saved state.
      */
-    @LayoutRes
-    protected abstract int getLayoutResource();
-
-    /**
-     * Initializes all views.
-     */
-    protected abstract void setupViews();
+    protected abstract void setupViews(@Nullable Bundle savedInstanceState);
 }

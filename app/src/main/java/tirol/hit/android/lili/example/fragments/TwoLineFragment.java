@@ -12,6 +12,10 @@ import tirol.hit.android.lili.example.models.view.TwoLineDummyModel;
  * Created by Stefan Haselwanter on 14.09.2017.
  */
 public class TwoLineFragment extends BaseListFragment<TwoLineDummy, TwoLineDummyModel> {
+    public TwoLineFragment() {
+        super(TwoLineDummyModel.class);
+    }
+
     @NonNull
     @Override
     public String getFragmentTag() {
@@ -22,10 +26,5 @@ public class TwoLineFragment extends BaseListFragment<TwoLineDummy, TwoLineDummy
     @Override
     protected ListAdapter<TwoLineDummy> getAdapter() {
         return new TwoLineCardItemAdapter<>();
-    }
-
-    @Override
-    protected Class<TwoLineDummyModel> getModelClass() {
-        return TwoLineDummyModel.class;
     }
 }
