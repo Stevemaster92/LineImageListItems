@@ -33,14 +33,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/firstLine"
+            android:id="@+id/first_line"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.ListItemFirstLine"
             tools:text="First Line" />
 
         <TextView
-            android:id="@+id/secondLine"
+            android:id="@+id/second_line"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.ListItemSecondLine"
