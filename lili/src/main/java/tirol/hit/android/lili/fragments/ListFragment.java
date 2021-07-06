@@ -3,6 +3,7 @@ package tirol.hit.android.lili.fragments;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.LayoutRes;
@@ -43,8 +44,8 @@ public abstract class ListFragment<T extends OneLineImageItem, M extends BaseVie
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         observeData();
         observeError();
     }

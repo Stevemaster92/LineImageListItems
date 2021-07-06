@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 public abstract class BaseModelFragment<M extends ViewModel> extends TagFragment {
-    private Class<M> modelClass;
+    private final Class<M> modelClass;
     private M model;
 
     protected BaseModelFragment(@LayoutRes int resId, Class<M> modelClass) {

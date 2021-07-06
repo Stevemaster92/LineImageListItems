@@ -43,10 +43,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.help:
-                Toast.makeText(this, "Please select an item", Toast.LENGTH_SHORT).show();
-                return true;
+        if (item.getItemId() == R.id.help) {
+            Toast.makeText(this, "Please select an item", Toast.LENGTH_SHORT).show();
+            return true;
         }
 
         return false;

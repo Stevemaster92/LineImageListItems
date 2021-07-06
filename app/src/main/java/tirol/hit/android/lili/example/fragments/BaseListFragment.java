@@ -36,13 +36,13 @@ public abstract class BaseListFragment<T extends OneLineImageItem, M extends Bas
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.refresh:
-                refreshData();
-                return true;
-            case R.id.add:
-                loadMoreData();
-                return true;
+        int id = item.getItemId();
+        if (id == R.id.refresh) {
+            refreshData();
+            return true;
+        } else if (id == R.id.add) {
+            loadMoreData();
+            return true;
         }
 
         return false;

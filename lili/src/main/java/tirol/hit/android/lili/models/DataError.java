@@ -1,8 +1,8 @@
 package tirol.hit.android.lili.models;
 
 public class DataError {
-    private int code;
-    private String message;
+    private final int code;
+    private final String message;
 
     public DataError(int code, String message) {
         this.code = code;
